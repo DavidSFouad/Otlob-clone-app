@@ -54,7 +54,14 @@ public class OtlobGUI extends Application {
       Button Admin = new Button("Admin");
       Button Seller = new Button("Seller");
       Button Customer = new Button("Customer");
-      
+      Customer.setOnAction(e -> {
+        System.out.println("Button clicked!"); // Replace this with your desired action
+    });
+    Seller.setOnAction(e -> {
+      System.out.println("Button clicked!"); // Replace this with your desired action
+  });
+  
+
       Admin.setPrefWidth(200);
       Admin.setPrefHeight(80);
       Seller.setPrefWidth(200);
@@ -82,8 +89,6 @@ public class OtlobGUI extends Application {
    Scene LoginChoice = new Scene(main,1000,600);
    
   
-       //icon
-     mainstage.getIcons().add(new javafx.scene.image.Image("icon.jpg"));
        
       
        mainstage.setResizable(false);
