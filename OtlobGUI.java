@@ -1,4 +1,11 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,12 +36,72 @@ author @Hamza Magdy
 public class OtlobGUI extends Application {
 
 // role for choice admin/customer/seller IMPORTANT
+
+    static Scanner s = new Scanner(System.in);
+
+    static ArrayList<Admin> adminArrayList = new ArrayList<>();
+    static ArrayList<Customer> customerArrayList = new ArrayList<>();
+    static ArrayList<Seller> sellerArrayList = new ArrayList<>();
+    static ArrayList<Order> orderArrayList = new ArrayList<>();
+    static ArrayList<Product> productArrayList = new ArrayList<>();
+
+    static final String adminPath = "D:\\college\\Sophomore fall 23\\OOP\\poject oop\\Otlob-clone-app\\admins.bin";
+    static final String customerPath = "D:\\college\\Sophomore fall 23\\OOP\\poject oop\\Otlob-clone-app\\customers.bin";
+    static final String sellerPath = "D:\\college\\Sophomore fall 23\\OOP\\poject oop\\Otlob-clone-app\\sellers.bin";
+    static final String orderPath = "D:\\college\\Sophomore fall 23\\OOP\\poject oop\\Otlob-clone-app\\orders.bin";
+    static final String productPath = "D:\\college\\Sophomore fall 23\\OOP\\poject oop\\Otlob-clone-app\\products.bin";
+
+   public static void loadArrayLists() {
+        try {
+            try (ObjectInputStream oisAdmins = new ObjectInputStream(new FileInputStream(adminPath))) {
+                adminArrayList = (ArrayList<Admin>) oisAdmins.readObject();
+            }
+            try (ObjectInputStream oisCustomers = new ObjectInputStream(new FileInputStream(customerPath))) {
+                customerArrayList = (ArrayList<Customer>) oisCustomers.readObject();
+            }
+            try (ObjectInputStream oisSellers = new ObjectInputStream(new FileInputStream(sellerPath))) {
+                sellerArrayList = (ArrayList<Seller>) oisSellers.readObject();
+            }
+            try (ObjectInputStream oisOrders = new ObjectInputStream(new FileInputStream(orderPath))) {
+                orderArrayList = (ArrayList<Order>) oisOrders.readObject();
+            }
+            try (ObjectInputStream oisProducts = new ObjectInputStream(new FileInputStream(productPath))) {
+                productArrayList = (ArrayList<Product>) oisProducts.readObject();
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+      }
+ 
+   public static void saveArrayLists() {
+        try {
+            try (ObjectOutputStream oosAdmins = new ObjectOutputStream(new FileOutputStream(adminPath))) {
+                oosAdmins.writeObject(adminArrayList);
+            }
+            try (ObjectOutputStream oosCustomers = new ObjectOutputStream(new FileOutputStream(customerPath))) {
+                oosCustomers.writeObject(customerArrayList);
+            }
+            try (ObjectOutputStream oosSellers = new ObjectOutputStream(new FileOutputStream(sellerPath))) {
+                oosSellers.writeObject(sellerArrayList);
+            }
+            try (ObjectOutputStream oosOrders = new ObjectOutputStream(new FileOutputStream(orderPath))) {
+                oosOrders.writeObject(orderArrayList);
+            }
+            try (ObjectOutputStream oosProducts = new ObjectOutputStream(new FileOutputStream(productPath))) {
+                oosProducts.writeObject(productArrayList);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
   private String selectedRole;
+
     
-  
   @Override
     public void start(Stage mainstage)throws Exception{
 
+      loadArrayLists();
 //Login page
 
         Label LoginWelcome = new Label("Welcome Back");
@@ -71,6 +138,7 @@ public class OtlobGUI extends Application {
         HBox lay = new HBox(home);
 
         Button Login = new Button("Login");
+        
 
         TextField LoginEnter = new TextField();
         LoginEnter.setMaxSize(110, 110);
@@ -179,7 +247,7 @@ public class OtlobGUI extends Application {
       
       
  
-       home.setOnMouseClicked(e-> mainstage.setScene(LoginChoice));
+      home.setOnMouseClicked(e-> mainstage.setScene(LoginChoice));
       
     //admin scene 
       StackPane adminpane = new StackPane();
@@ -277,13 +345,28 @@ Login.setOnMouseClicked(e -> {
         
         switch (selectedRole) {
             case "Admin":
-                mainstage.setScene(adminscene);
+                for (Admin admin : adminArrayList) {
+                  if(Logintype.getText().equals(admin.getUserName())&&LoginEnter.getText().equals(admin.getUserPassword())){
+                    mainstage.setScene(adminscene);
+                    break;
+                  }
+                }
                 break;
             case "Seller":
-                mainstage.setScene(sellerscene);
+                for (Seller seller : sellerArrayList) {
+                  if(Logintype.getText().equals(seller.getUserName())&&LoginEnter.getText().equals(seller.getUserPassword())){
+                    mainstage.setScene(sellerscene);
+                    break;
+                  }
+                }
                 break;
             case "Customer":
-                mainstage.setScene(customerscene);
+                for (Customer customer : customerArrayList) {
+                  if(Logintype.getText().equals(customer.getUserName())&&LoginEnter.getText().equals(customer.getUserPassword())){
+                    mainstage.setScene(customerscene);
+                    break;
+                  }
+                }
                 break;
             default:
                
@@ -301,15 +384,97 @@ Login.setOnMouseClicked(e -> {
 
 SignupB.setOnMouseClicked(e -> {
     if (selectedRole != null) {
-       
+      boolean found = false;
         switch (selectedRole) {
             case "Admin":
+            for (Admin admin : adminArrayList){
+              if (admin.getUserName().equals(Logintype.getText()) && admin.getUserPassword().equals(LoginEnter.getText())) {
+                  found = true;
+                  break;
+              }
+          }
+
+          if (found){
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+               alert.setTitle("User already exist");
+               alert.setHeaderText(null);
+               alert.setContentText("Please login");
+               alert.showAndWait();
+               mainstage.setScene(LiSu);
+               break;
+              
+          } else {
+              int id = adminArrayList.size() + 1;
+              Admin adminLoggedIn = new Admin(Logintype.getText(),LoginEnter.getText() ,id);
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+              alert.setTitle("logged in");
+              alert.setHeaderText(null);
+              alert.setContentText("account add successfully");
+              alert.showAndWait();
+              adminArrayList.add(adminLoggedIn);
+            
+          }
                 mainstage.setScene(adminscene);
                 break;
             case "Seller":
+                for (Seller seller : sellerArrayList){
+              if (seller.getUserName().equals(Logintype.getText()) && seller.getUserPassword().equals(LoginEnter.getText())) {
+                  found = true;
+                  break;
+              }
+            }
+
+          if (found){
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+               alert.setTitle("User already exist");
+               alert.setHeaderText(null);
+               alert.setContentText("Please login");
+               alert.showAndWait();
+               mainstage.setScene(LiSu);
+               break;
+
+              
+          } else {
+              int id = sellerArrayList.size() + 1;
+              Seller sellerLoggedIn = new Seller(Logintype.getText(),LoginEnter.getText() ,id);
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+              alert.setTitle("logged in");
+              alert.setHeaderText(null);
+              alert.setContentText("account add successfully");
+              alert.showAndWait();
+              sellerArrayList.add(sellerLoggedIn);
+            
+          }
                 mainstage.setScene(sellerscene);
                 break;
             case "Customer":
+            for (Customer customer : customerArrayList){
+              if (customer.getUserName().equals(Logintype.getText()) && customer.getUserPassword().equals(LoginEnter.getText())) {
+                  found = true;
+                  break;
+              }
+          }
+
+          if (found){
+               Alert alert = new Alert(Alert.AlertType.WARNING);
+               alert.setTitle("alert");
+               alert.setHeaderText(null);
+               alert.setContentText("user already exist Please login");
+               alert.showAndWait();
+               mainstage.setScene(LiSu);
+               break;
+              
+          } else {
+              int id = customerArrayList.size() + 1;
+              Customer customerLoggedIn = new Customer(Logintype.getText(),LoginEnter.getText() ,id);
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+              alert.setTitle("logged in");
+              alert.setHeaderText(null);
+              alert.setContentText("account add successfully");
+              alert.showAndWait();
+              customerArrayList.add(customerLoggedIn);
+            
+          }
                 mainstage.setScene(customerscene);
                 break;
             default:
@@ -329,18 +494,25 @@ SignupB.setOnMouseClicked(e -> {
         
        //icon setup + mainstage showing
 
+       mainstage.getIcons().add(new javafx.scene.image.Image("image.jpg"));
        mainstage.setResizable(false);
        mainstage.setTitle("Otlob");
        mainstage.setScene(LoginChoice);// <---Always set to LoginChoice
        mainstage.show();
     }  
   
-    
+    void setscene(Button butt ,Scene role, Stage main){
+      butt.setOnMouseClicked(e->main.setScene(role));
+    }
 
     public static void main(String[] args) {
     
+        loadArrayLists();
+        System.out.println("data loaded");
         launch(args);
-    
+        saveArrayLists();
+        System.out.println("data saved");
+
     }
    
 }
