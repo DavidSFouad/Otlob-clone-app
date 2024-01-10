@@ -250,14 +250,14 @@ public class OtlobGUI extends Application {
       home.setOnMouseClicked(e-> mainstage.setScene(LoginChoice));
       
     //admin scene 
-      StackPane adminpane = new StackPane();
-      Scene adminscene = new Scene(adminpane,1000,600);
-      
+      VBox adminbox = new VBox(20);
+      Scene adminscene = new Scene(adminbox,1000,600);
+      adminbox.setAlignment(Pos.TOP_CENTER);
       Admin.setOnAction(e -> {
     selectedRole = "Admin";
     mainstage.setScene(LiSu);});
       
-      adminpane.setStyle("-fx-background-color: rgb(255, 222, 0);");
+      adminbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
         //Home button to go to homepage(login page)
         Button homepageA = new Button("Logout");
        homepageA.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
@@ -271,19 +271,21 @@ public class OtlobGUI extends Application {
         adminwlcm.setPrefHeight(100);
 
         Text adminmenu = new Text("Admin menu :");
-        adminmenu.setTranslateX(50); 
-        adminmenu.setTranslateY(50);
+        //adminmenu.setTranslateX(50); 
+        //adminmenu.setTranslateY(50);
         adminmenu.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,20));
         adminmenu.setFill(Color.rgb(98, 42, 123));
         
-        VBox adminContent = new VBox(adminwlcm,adminmenu);
+       /* VBox adminContent = new VBox(adminwlcm,adminmenu);
         VBox.setVgrow(adminContent, Priority.ALWAYS);
         adminContent.setPadding(new Insets(0,0,0,400));
 
+        */ 
         HBox topBar = new HBox(homepageA);
         topBar.setAlignment(Pos.TOP_LEFT);
         topBar.setPadding(new Insets(10));
 
+        
         
         
       HBox choice2 = new HBox(80);
@@ -308,7 +310,8 @@ public class OtlobGUI extends Application {
        choice2.setTranslateX(0); // Set X position
         choice2.setTranslateY(0); // Set Y position
 
-        adminpane.getChildren().addAll(adminContent, topBar,choice2);
+        
+      adminbox.getChildren().addAll(topBar,adminwlcm,adminmenu,choice2);
       
        //seller scene
        GridPane sellerpane = new GridPane();
@@ -322,7 +325,7 @@ public class OtlobGUI extends Application {
        //Home button to go to homepage(login page)
         Button homepageS = new Button("Home Page");
        homepageS.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-       homepageS.setOnAction(e -> mainstage.setScene(LoginChoice));
+       homepageS.setOnAction(e -> mainstage.setScene(LiSu));
       
        Label sellerwlcm = new Label("Welcome Seller !");
         sellerwlcm.setStyle("-fx-text-fill: rgb(98, 42, 123)");
@@ -349,7 +352,7 @@ public class OtlobGUI extends Application {
        //Home button to go to homepage(login page)
         Button homepageC = new Button("Home Page");
        homepageC.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-       homepageC.setOnAction(e -> mainstage.setScene(LoginChoice));
+       homepageC.setOnAction(e -> mainstage.setScene(LiSu));
       
        Label userwlcm = new Label("Welcome Customer !");
 
@@ -367,11 +370,15 @@ public class OtlobGUI extends Application {
    
       
    //manage scene
-   StackPane managepane=new StackPane();
-   Scene managescene=new Scene(managepane,1000,600);  
+   
+   VBox manageBox=new VBox(1000);
+      manageBox.setSpacing(40);
+      manageBox.setAlignment(Pos.CENTER); 
+      manageBox.setPrefWidth(60);
+   Scene managescene=new Scene(manageBox,1000,600);  
    manage.setOnAction(e->{mainstage.setScene(managescene);}); 
      
-   managepane.setStyle("-fx-background-color: rgb(255, 222, 0);");
+   manageBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
    Button back2 =new Button("Back");
    back2.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
    back2.setOnAction(e -> mainstage.setScene(adminscene));
@@ -381,7 +388,7 @@ public class OtlobGUI extends Application {
    topBar4.setPadding(new Insets(10));
 
    Text managedash=new Text("Manage Dashboard");
-   managedash.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,50));
+   managedash.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,40));
    managedash.setFill(Color.rgb(98, 42, 123));
 
    Text sellertitle=new Text("Seller");
@@ -456,39 +463,238 @@ public class OtlobGUI extends Application {
       choice4.setTranslateX(0); // Set X position
       choice4.setTranslateY(0); // Set Y position
 
-      VBox manageBox=new VBox(20,managedash,sellertitle,choice3,customertitle,choice4);
-      manageBox.setSpacing(40);
-      manageBox.setAlignment(Pos.CENTER); 
-      manageBox.setPrefWidth(60);
+      
 
 
-   managepane.getChildren().addAll(topBar4,manageBox);
+   manageBox.getChildren().addAll(topBar4,managedash,sellertitle,choice3,customertitle,choice4);
 
    //add seller scene
-      StackPane addsellerpane=new StackPane();
-      Scene addsellerscene=new Scene(addsellerpane,1000,600);
+      
+      VBox sellerbox = new VBox(1000);
+      sellerbox.setSpacing(5);
+      sellerbox.setAlignment(Pos.TOP_CENTER);
+
+      Scene addsellerscene=new Scene(sellerbox,1000,600);
       add.setOnAction(e->{mainstage.setScene(addsellerscene);});
 
-      addsellerpane.setStyle("-fx-background-color: rgb(255, 222, 0);");
       Button back3 =new Button("Back");
       back3.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
       back3.setOnAction(e -> mainstage.setScene(managescene));
 
       HBox topBar5 = new HBox(back3);
       topBar5.setAlignment(Pos.TOP_LEFT);
-      topBar5.setPadding(new Insets(10));
-      
+      topBar5.setPadding(new Insets(50));
       
 
-      Label sellername=new Label("Seller Name :");
+      Button back4 =new Button("Back");
+      back4.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      back4.setOnAction(e -> mainstage.setScene(managescene));
 
-      addsellerpane.getChildren().addAll(topBar5);
+      HBox topBar6 = new HBox(back3);
+      topBar6.setAlignment(Pos.TOP_LEFT);
+      topBar6.setPadding(new Insets(50));
+
+      Label addsellertitle=new Label("Add Seller Data");
+      addsellertitle.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+      addsellertitle.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 40));
+      addsellertitle.setAlignment(Pos.TOP_CENTER);
+      addsellertitle.setMinHeight(150);
+
+      Label sellername = new Label("Enter Seller Name:");
+      sellername.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+      sellername.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+      TextField addsellerNfield = new TextField();
+      addsellerNfield.setMaxSize(110, 110);
+        
+      Label addsellerpass = new Label("Enter Password:");
+      addsellerpass.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+      addsellerpass.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+      TextField addsellerPfield = new TextField();
+      addsellerPfield.setMaxSize(110, 110);
+
+      Button addseller = new Button("Add Seller");
+      addseller.setOnAction(e->{
+        if (addsellerNfield.getText().isBlank()||addsellerPfield.getText().isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("please fill in the data first");
+        alert.showAndWait();
+        }
+       else{ int id = sellerArrayList.size() +1;
+        Seller newSeller = new Seller(addsellerNfield.getText(), addsellerPfield.getText(), id);
+        System.out.println("New Seller Account Created for " + newSeller.getUserName());
+        sellerArrayList.add(newSeller);
+        
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("New Seller added");
+        alert.setHeaderText(null);
+        alert.setContentText("Operation success");
+        alert.showAndWait();
+        for (Seller seller : sellerArrayList) {
+            System.out.println(seller.getUserName()+" "+seller.getUserPassword());
+        }
+    }});
+    
+      
+      sellerbox.getChildren().addAll(topBar6,addsellertitle,sellername,addsellerNfield,addsellerpass,addsellerPfield,addseller);
+      sellerbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+
+      
 
    //edit seller scene
+   VBox adminSearchBox = new VBox(20);
+   adminSearchBox.setAlignment(Pos.CENTER);
+Scene adminSearchScene = new Scene(adminSearchBox, 1000, 600);
+edit.setOnAction(e->{mainstage.setScene(adminSearchScene);});
+adminSearchBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+
+Button backedit =new Button("Back");
+backedit.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+backedit.setOnAction(e -> mainstage.setScene(managescene));
+
+HBox topBaredit = new HBox(backedit);
+topBaredit.setAlignment(Pos.TOP_LEFT);
+topBaredit.setPadding(new Insets(50));
+
+Label searchLabel = new Label("Search Sellers by Name:");
+searchLabel.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+searchLabel.setTextFill(Color.rgb(98, 42, 123));
+
+TextField searchField = new TextField();
+searchField.setPromptText("Enter seller name");
+searchField.setPrefWidth(300);
+
+Button searchButton = new Button("Search");
+searchButton.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+/*searchButton .setOnAction(e -> {
+    String searchName = searchField.getText();
+    if (!searchName.isEmpty()) {
+        // Search functionality
+        ArrayList<Seller> matchedSellers = new ArrayList<>();
+        for (Seller seller : sellerArrayList) {
+            if (seller.getUserName().equalsIgnoreCase(searchName)) {
+                matchedSellers.add(seller);
+            }
+        }
+        
+        // Display matched sellers
+        if (!matchedSellers.isEmpty()) {
+            // Clear previous content if any
+            adminSearchBox.getChildren().removeIf(node -> node instanceof HBox);
+
+            Button backeditrem =new Button("Back");
+            backeditrem.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+            backeditrem.setOnAction(b -> mainstage.setScene(managescene));
+
+            HBox topBareditrem = new HBox(backedit);
+            topBareditrem.setAlignment(Pos.TOP_LEFT);
+            topBareditrem.setPadding(new Insets(50));
+            VBox sellerInfoBox = new VBox(10);
+            sellerInfoBox.setAlignment(Pos.CENTER);
+            for (Seller matchedSeller : matchedSellers) {
+                HBox sellerRow = new HBox(20);
+                sellerRow.setAlignment(Pos.CENTER);
+                TextField sellerNameField = new TextField(matchedSeller.getUserName());
+                int sellid=matchedSeller.getSellerID();
+                Label sellerid=new Label("Seller id :"+sellid);
+                Button editButton = new Button("Edit");
+                editButton.setOnAction(event -> {
+                    // Perform edit on seller's name
+                    matchedSeller.setUserName(sellerNameField.getText());
+                    // You may update your data model or perform other actions as needed
+                });
+
+                sellerRow.getChildren().addAll(topBareditrem,new Label("Seller Name:"), sellerNameField, sellerid,editButton);
+                sellerInfoBox.getChildren().add(sellerRow);
+            }
+            
+            adminSearchBox.getChildren().add(sellerInfoBox);
+        } else {
+            // Display a message if no sellers are found
+            Label noSellersFoundLabel = new Label("No sellers found with the given name.");
+            adminSearchBox.getChildren().add(noSellersFoundLabel);
+        }
+    } else {
+        // Display a message if the search field is empty
+        Label emptyFieldLabel = new Label("Please enter a seller name to search.");
+        adminSearchBox.getChildren().add(emptyFieldLabel);
+        
+    }
+});*/
+
+HBox searchBox = new HBox(20);
+searchBox.getChildren().addAll(topBaredit,searchLabel, searchField, searchButton);
+searchBox.setAlignment(Pos.CENTER);
+adminSearchBox.getChildren().addAll(searchBox);
    //search seller scenr
    //remove seller scene
 
    //add customer scene
+   VBox customerbox = new VBox(1000);
+      customerbox.setSpacing(5);
+      customerbox.setAlignment(Pos.TOP_CENTER);
+
+      Scene addcustomerscene=new Scene(customerbox,1000,600);
+      addc.setOnAction(e->{mainstage.setScene(addcustomerscene);});
+
+      Button back5 =new Button("Back");
+      back5.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      back5.setOnAction(e -> mainstage.setScene(managescene));
+
+      HBox topBar7 = new HBox(back5);
+      topBar7.setAlignment(Pos.TOP_LEFT);
+      topBar7.setPadding(new Insets(50));
+      
+      Label addcustomertitle=new Label("Add Customer Data");
+      addcustomertitle.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+      addcustomertitle.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 40));
+      addcustomertitle.setAlignment(Pos.TOP_CENTER);
+      addcustomertitle.setMinHeight(150);
+
+      Label customername = new Label("Enter Customer Name:");
+      customername.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+      customername.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+      TextField addcustomerNfield = new TextField();
+      addcustomerNfield.setMaxSize(110, 110);
+        
+      Label addcustomerpass = new Label("Enter Password:");
+      addcustomerpass.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+      addcustomerpass.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+      TextField addcustomerPfield = new TextField();
+      addcustomerPfield.setMaxSize(110, 110);
+
+      Button addcustomer = new Button("Add Customer");
+      addcustomer.setOnAction(e->{
+        if (addcustomerNfield.getText().isBlank()||addcustomerPfield.getText().isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("please fill in the data first");
+        alert.showAndWait();
+        }
+       else{ int id = customerArrayList.size() +1;
+        Customer newCustomer = new Customer(addcustomerNfield.getText(), addcustomerPfield.getText(), id);
+        System.out.println("New Customer Account Created for " + newCustomer.getUserName());
+        customerArrayList.add(newCustomer);
+        
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("New Customer added");
+        alert.setHeaderText(null);
+        alert.setContentText("Operation success");
+        alert.showAndWait();
+        for (Seller seller : sellerArrayList) {
+            System.out.println(seller.getUserName()+" "+seller.getUserPassword());
+        }
+    }});
+    
+      
+      customerbox.getChildren().addAll(topBar7,addcustomertitle,customername,addcustomerNfield,addcustomerpass,addcustomerPfield,addcustomer);
+      customerbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
    //edit customer scene
    //search customer scenr
    //remove customer scene
@@ -507,12 +713,12 @@ Login.setOnMouseClicked(e -> {
         
         switch (selectedRole) {
             case "Admin":
-                for (Admin admin : adminArrayList) {
-                  if(Logintype.getText().equals(admin.getUserName())&&LoginEnter.getText().equals(admin.getUserPassword())){
+                /*for (Admin admin : adminArrayList) {
+                  if(Logintype.getText().equals(admin.getUserName())&&LoginEnter.getText().equals(admin.getUserPassword())){*/
                     mainstage.setScene(adminscene);
-                    break;
-                  }
-                }
+                    /*break;
+                   }
+                }*/
                 break;
             case "Seller":
                 for (Seller seller : sellerArrayList) {
@@ -671,6 +877,9 @@ SignupB.setOnMouseClicked(e -> {
     
         loadArrayLists();
         System.out.println("data loaded");
+        for (Seller string : sellerArrayList) {
+            System.out.println(string.getUserName());
+        }
         launch(args);
         saveArrayLists();
         System.out.println("data saved");
