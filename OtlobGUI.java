@@ -108,7 +108,7 @@ public class OtlobGUI extends Application {
         LoginWelcome.setStyle("-fx-text-fill: rgb(98, 42, 123)");
         LoginWelcome.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 60));
         LoginWelcome.setAlignment(Pos.TOP_CENTER);
-        LoginWelcome.setMinHeight(250);
+        LoginWelcome.setMinHeight(150);
 
         VBox logSign = new VBox(1000);
         logSign.setSpacing(7);
@@ -259,17 +259,24 @@ public class OtlobGUI extends Application {
       
       adminpane.setStyle("-fx-background-color: rgb(255, 222, 0);");
         //Home button to go to homepage(login page)
-        Button homepageA = new Button("Home Page");
+        Button homepageA = new Button("Logout");
        homepageA.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
        homepageA.setAlignment(Pos.TOP_LEFT);
-       homepageA.setOnAction(e -> mainstage.setScene(LoginChoice));
+       homepageA.setOnAction(e -> mainstage.setScene(LiSu));
       
        Label adminwlcm = new Label("Welcome Admin !");
-       adminwlcm.setAlignment(Pos.TOP_CENTER);
+       //adminwlcm.setAlignment(Pos.TOP_CENTER);
         adminwlcm.setStyle("-fx-text-fill: rgb(98, 42, 123)");
         adminwlcm.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
+        adminwlcm.setPrefHeight(100);
 
-        VBox adminContent = new VBox(adminwlcm);
+        Text adminmenu = new Text("Admin menu :");
+        adminmenu.setTranslateX(50); 
+        adminmenu.setTranslateY(50);
+        adminmenu.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,20));
+        adminmenu.setFill(Color.rgb(98, 42, 123));
+        
+        VBox adminContent = new VBox(adminwlcm,adminmenu);
         VBox.setVgrow(adminContent, Priority.ALWAYS);
         adminContent.setPadding(new Insets(0,0,0,400));
 
@@ -277,7 +284,31 @@ public class OtlobGUI extends Application {
         topBar.setAlignment(Pos.TOP_LEFT);
         topBar.setPadding(new Insets(10));
 
-        adminpane.getChildren().addAll(adminContent, topBar);
+        
+        
+      HBox choice2 = new HBox(80);
+      Button manage = new Button("Manage");
+      Button view = new Button("View");
+      
+      
+      manage.setPrefWidth(200);
+      manage.setPrefHeight(80);
+      view.setPrefWidth(200);
+      view.setPrefHeight(80);
+      
+      manage.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      view.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      manage.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      view.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      
+   
+      choice2.setSpacing(50);
+      choice2.getChildren().addAll(manage,view);
+      choice2.setAlignment(Pos.CENTER);
+       choice2.setTranslateX(0); // Set X position
+        choice2.setTranslateY(0); // Set Y position
+
+        adminpane.getChildren().addAll(adminContent, topBar,choice2);
       
        //seller scene
        GridPane sellerpane = new GridPane();
@@ -335,8 +366,139 @@ public class OtlobGUI extends Application {
         customerpane.getChildren().addAll(userContent, topBar3);
    
       
-      
+   //manage scene
+   StackPane managepane=new StackPane();
+   Scene managescene=new Scene(managepane,1000,600);  
+   manage.setOnAction(e->{mainstage.setScene(managescene);}); 
      
+   managepane.setStyle("-fx-background-color: rgb(255, 222, 0);");
+   Button back2 =new Button("Back");
+   back2.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+   back2.setOnAction(e -> mainstage.setScene(adminscene));
+
+   HBox topBar4 = new HBox(back2);
+   topBar4.setAlignment(Pos.TOP_LEFT);
+   topBar4.setPadding(new Insets(10));
+
+   Text managedash=new Text("Manage Dashboard");
+   managedash.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,50));
+   managedash.setFill(Color.rgb(98, 42, 123));
+
+   Text sellertitle=new Text("Seller");
+   sellertitle.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,30));
+   sellertitle.setFill(Color.rgb(98, 42, 123));
+
+   HBox choice3 = new HBox(80);
+      Button add = new Button("Add");
+      Button edit = new Button("Edit");
+      Button search = new Button("Search");
+      Button remove = new Button("Remove");
+
+      add.setPrefWidth(100);
+      add.setPrefHeight(50);
+      edit.setPrefWidth(100);
+      edit.setPrefHeight(50);
+      search.setPrefWidth(100);
+      search.setPrefHeight(50);
+      remove.setPrefWidth(150);
+      remove.setPrefHeight(50);
+      
+      add.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      edit.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      search.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      remove.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      
+      add.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      edit.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      search.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      remove.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      
+   
+      choice3.setSpacing(50);
+      choice3.getChildren().addAll(add,edit,search,remove);
+      choice3.setAlignment(Pos.CENTER);
+      choice3.setTranslateX(0); // Set X position
+      choice3.setTranslateY(0); // Set Y position
+
+     Text customertitle=new Text("Customer");
+     customertitle.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,30));
+     customertitle.setFill(Color.rgb(98, 42, 123));
+
+     HBox choice4 = new HBox(80);
+      Button addc = new Button("Add");
+      Button editc = new Button("Edit");
+      Button searchc = new Button("Search");
+      Button removec = new Button("Remove");
+
+      addc.setPrefWidth(100);
+      addc.setPrefHeight(50);
+      editc.setPrefWidth(100);
+      editc.setPrefHeight(50);
+      searchc.setPrefWidth(100);
+      searchc.setPrefHeight(50);
+      removec.setPrefWidth(150);
+      removec.setPrefHeight(50);
+      
+      addc.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      editc.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      searchc.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      removec.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      
+      addc.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      editc.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      searchc.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      removec.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      
+   
+      choice4.setSpacing(50);
+      choice4.getChildren().addAll(addc,editc,searchc,removec);
+      choice4.setAlignment(Pos.CENTER);
+      choice4.setTranslateX(0); // Set X position
+      choice4.setTranslateY(0); // Set Y position
+
+      VBox manageBox=new VBox(20,managedash,sellertitle,choice3,customertitle,choice4);
+      manageBox.setSpacing(40);
+      manageBox.setAlignment(Pos.CENTER); 
+      manageBox.setPrefWidth(60);
+
+
+   managepane.getChildren().addAll(topBar4,manageBox);
+
+   //add seller scene
+      StackPane addsellerpane=new StackPane();
+      Scene addsellerscene=new Scene(addsellerpane,1000,600);
+      add.setOnAction(e->{mainstage.setScene(addsellerscene);});
+
+      addsellerpane.setStyle("-fx-background-color: rgb(255, 222, 0);");
+      Button back3 =new Button("Back");
+      back3.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      back3.setOnAction(e -> mainstage.setScene(managescene));
+
+      HBox topBar5 = new HBox(back3);
+      topBar5.setAlignment(Pos.TOP_LEFT);
+      topBar5.setPadding(new Insets(10));
+      
+      
+
+      Label sellername=new Label("Seller Name :");
+
+      addsellerpane.getChildren().addAll(topBar5);
+
+   //edit seller scene
+   //search seller scenr
+   //remove seller scene
+
+   //add customer scene
+   //edit customer scene
+   //search customer scenr
+   //remove customer scene
+
+   //view dashboard scene (seller-customer-orderhistory)
+   //view sellers scene
+   //view customers scene
+   //view  oreders history scene
+
+
 //Login and signup events 
 
 Login.setOnMouseClicked(e -> {
