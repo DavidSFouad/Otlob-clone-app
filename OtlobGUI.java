@@ -108,7 +108,7 @@ public class OtlobGUI extends Application {
         LoginWelcome.setStyle("-fx-text-fill: rgb(98, 42, 123)");
         LoginWelcome.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 60));
         LoginWelcome.setAlignment(Pos.TOP_CENTER);
-        LoginWelcome.setMinHeight(150);
+        LoginWelcome.setMinHeight(200);
 
         VBox logSign = new VBox(1000);
         logSign.setSpacing(7);
