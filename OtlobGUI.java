@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 
 import javafx.application.Application;
@@ -12,7 +13,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -198,7 +201,7 @@ public class OtlobGUI extends Application {
     box.setAlignment(Pos.CENTER); 
         box.setPrefWidth(60);
         signup.setCenter(box);
-   
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Choice page (choosing between admin,seller and customer)  
       Pane main = new Pane();
       main.setStyle("-fx-background-color: rgb(255, 222, 0);");
@@ -248,7 +251,7 @@ public class OtlobGUI extends Application {
       
  
       home.setOnMouseClicked(e-> mainstage.setScene(LoginChoice));
-      
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //admin scene 
       VBox adminbox = new VBox(20);
       Scene adminscene = new Scene(adminbox,1000,600);
@@ -312,7 +315,7 @@ public class OtlobGUI extends Application {
 
         
       adminbox.getChildren().addAll(topBar,adminwlcm,adminmenu,choice2);
-      
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        //seller scene
        GridPane sellerpane = new GridPane();
        Scene sellerscene = new Scene(sellerpane,1000,600);
@@ -339,7 +342,7 @@ public class OtlobGUI extends Application {
         topBar2.setPadding(new Insets(10));
 
         sellerpane.getChildren().addAll(sellerContent, topBar2);
-       
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //customer scene
      GridPane customerpane = new GridPane();
        Scene customerscene = new Scene(customerpane,1000,600);
@@ -368,7 +371,7 @@ public class OtlobGUI extends Application {
 
         customerpane.getChildren().addAll(userContent, topBar3);
    
-      
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //manage scene
    
    VBox manageBox=new VBox(1000);
@@ -467,7 +470,7 @@ public class OtlobGUI extends Application {
 
 
    manageBox.getChildren().addAll(topBar4,managedash,sellertitle,choice3,customertitle,choice4);
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //add seller scene
       
       VBox sellerbox = new VBox(1000);
@@ -543,10 +546,10 @@ public class OtlobGUI extends Application {
       sellerbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
 
       
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //edit seller scene
-   VBox adminSearchBox = new VBox(20);
-   adminSearchBox.setAlignment(Pos.CENTER);
+   VBox adminSearchBox = new VBox(20); // Adjust spacing as needed
+adminSearchBox.setAlignment(Pos.CENTER); // Center elements vertically
 Scene adminSearchScene = new Scene(adminSearchBox, 1000, 600);
 edit.setOnAction(e->{mainstage.setScene(adminSearchScene);});
 adminSearchBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
@@ -569,7 +572,7 @@ searchField.setPrefWidth(300);
 
 Button searchButton = new Button("Search");
 searchButton.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-/*searchButton .setOnAction(e -> {
+searchButton.setOnAction(e -> {
     String searchName = searchField.getText();
     if (!searchName.isEmpty()) {
         // Search functionality
@@ -580,22 +583,13 @@ searchButton.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rg
             }
         }
         
-        // Display matched sellers
+        // Update the content without clearing the existing nodes
+        VBox sellerInfoBox = new VBox(10);
+        adminSearchBox.getChildren().remove(sellerInfoBox); // Remove previous content if any
+
         if (!matchedSellers.isEmpty()) {
-            // Clear previous content if any
-            adminSearchBox.getChildren().removeIf(node -> node instanceof HBox);
-
-            Button backeditrem =new Button("Back");
-            backeditrem.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-            backeditrem.setOnAction(b -> mainstage.setScene(managescene));
-
-            HBox topBareditrem = new HBox(backedit);
-            topBareditrem.setAlignment(Pos.TOP_LEFT);
-            topBareditrem.setPadding(new Insets(50));
-            VBox sellerInfoBox = new VBox(10);
-            sellerInfoBox.setAlignment(Pos.CENTER);
             for (Seller matchedSeller : matchedSellers) {
-                HBox sellerRow = new HBox(20);
+                HBox sellerRow = new HBox(10);
                 sellerRow.setAlignment(Pos.CENTER);
                 TextField sellerNameField = new TextField(matchedSeller.getUserName());
                 int sellid=matchedSeller.getSellerID();
@@ -607,31 +601,191 @@ searchButton.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rg
                     // You may update your data model or perform other actions as needed
                 });
 
-                sellerRow.getChildren().addAll(topBareditrem,new Label("Seller Name:"), sellerNameField, sellerid,editButton);
+                sellerRow.getChildren().addAll(new Label("Seller Name:"), sellerNameField,sellerid, editButton);
                 sellerInfoBox.getChildren().add(sellerRow);
             }
-            
-            adminSearchBox.getChildren().add(sellerInfoBox);
         } else {
-            // Display a message if no sellers are found
-            Label noSellersFoundLabel = new Label("No sellers found with the given name.");
-            adminSearchBox.getChildren().add(noSellersFoundLabel);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Data missing");
+            alert.setHeaderText(null);
+            alert.setContentText("no seller found with that name");
+            alert.showAndWait();
         }
+
+        adminSearchBox.getChildren().add(sellerInfoBox);
     } else {
-        // Display a message if the search field is empty
-        Label emptyFieldLabel = new Label("Please enter a seller name to search.");
-        adminSearchBox.getChildren().add(emptyFieldLabel);
-        
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Blank entry");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter a seller name to search.");
+            alert.showAndWait();
     }
-});*/
+});
 
 HBox searchBox = new HBox(20);
 searchBox.getChildren().addAll(topBaredit,searchLabel, searchField, searchButton);
-searchBox.setAlignment(Pos.CENTER);
+searchBox.setAlignment(Pos.CENTER); // Center elements horizontally
+
+VBox.setMargin(searchBox, new Insets(50)); // Adjust vertical margin
+
 adminSearchBox.getChildren().addAll(searchBox);
-   //search seller scenr
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //search seller scene
+
+   VBox sellerSearch = new VBox(20); // Adjust spacing as needed
+sellerSearch.setAlignment(Pos.CENTER); // Center elements vertically
+Scene sellerSearchScene = new Scene(sellerSearch, 1000, 600);
+search.setOnAction(e -> { mainstage.setScene(sellerSearchScene); });
+sellerSearch.setStyle("-fx-background-color: rgb(255, 222, 0);");
+
+Button backToManageSellers = new Button("Back");
+backToManageSellers.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+backToManageSellers.setOnAction(e -> mainstage.setScene(managescene));
+
+HBox topSellerSearch = new HBox(backToManageSellers);
+topSellerSearch.setAlignment(Pos.TOP_LEFT);
+topSellerSearch.setPadding(new Insets(50));
+
+Label searchLSeller = new Label("Search Sellers:");
+searchLSeller.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+searchLSeller.setTextFill(Color.rgb(98, 42, 123));
+
+TextField searchFSeller = new TextField();
+searchFSeller.setPromptText("Enter seller name");
+searchFSeller.setPrefWidth(300);
+
+Button searchBSeller = new Button("Search");
+searchBSeller.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+searchBSeller.setOnAction(e -> {
+    String searchName = searchFSeller.getText();
+    if (!searchName.isEmpty()) {
+        // Search functionality
+        ArrayList<Seller> matchedSellers = new ArrayList<>();
+        for (Seller seller : sellerArrayList) {
+            if (seller.getUserName().equalsIgnoreCase(searchName)) {
+                matchedSellers.add(seller);
+            }
+        }
+        
+        // Update the content without clearing the existing nodes
+        VBox sellerInfoBox = new VBox(10);
+        sellerSearch.getChildren().remove(sellerInfoBox); // Remove previous content if any
+
+        if (!matchedSellers.isEmpty()) {
+            for (Seller matchedSeller : matchedSellers) {
+                HBox sellerRow = new HBox(10);
+                sellerRow.setAlignment(Pos.CENTER);
+                TextField sellerNameField = new TextField(matchedSeller.getUserName());
+                int sellerId = matchedSeller.getSellerID();
+                Label sellerIdLabel = new Label("Seller ID: " + sellerId);
+                
+
+                sellerRow.getChildren().addAll(new Label("Seller Found:"), sellerNameField, sellerIdLabel);
+                sellerInfoBox.getChildren().add(sellerRow);
+            }
+        } else {
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Data missing");
+            alert.setHeaderText(null);
+            alert.setContentText("No seller found with that name");
+            alert.showAndWait();
+        }
+
+        sellerSearch.getChildren().add(sellerInfoBox);
+    } else {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Blank entry");
+        alert.setHeaderText(null);
+        alert.setContentText("Please enter a seller name to search.");
+        alert.showAndWait();
+    }
+});
+HBox searchBoSeller = new HBox(20);
+searchBoSeller.getChildren().addAll(topSellerSearch, searchLSeller, searchFSeller, searchBSeller);
+searchBoSeller.setAlignment(Pos.CENTER); // Center elements horizontally
+
+VBox.setMargin(searchBoSeller, new Insets(50)); // Adjust vertical margin
+
+sellerSearch.getChildren().addAll(searchBoSeller);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //remove seller scene
 
+   VBox deleteSellerBox = new VBox(20); // Adjust spacing as needed
+deleteSellerBox.setAlignment(Pos.CENTER); // Center elements vertically
+Scene deleteSellerScene = new Scene(deleteSellerBox, 1000, 600);
+remove.setOnAction(e -> { mainstage.setScene(deleteSellerScene); });
+deleteSellerBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+
+Button backEdit = new Button("Back");
+backEdit.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+backEdit.setOnAction(e -> mainstage.setScene(managescene));
+
+HBox topBarEdit = new HBox(backEdit);
+topBarEdit.setAlignment(Pos.TOP_LEFT);
+topBarEdit.setPadding(new Insets(50));
+
+Label searchLabeld = new Label("Search Sellers by Name:");
+searchLabeld.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+searchLabeld.setTextFill(Color.rgb(98, 42, 123));
+
+TextField searchField2 = new TextField();
+searchField2.setPromptText("Enter seller name");
+searchField2.setPrefWidth(300);
+
+Button searchButton2 = new Button("Search");
+searchButton2.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+searchButton2.setOnAction(e -> {
+    String searchName = searchField2.getText();
+    if (!searchName.isEmpty()) {
+        // Search functionality
+        ArrayList<Seller> matchedSellers = new ArrayList<>();
+        for (Seller seller : sellerArrayList) {
+            if (seller.getUserName().equalsIgnoreCase(searchName)) {
+                matchedSellers.add(seller);
+            }
+        }
+        
+        if (!matchedSellers.isEmpty()) {
+            // Confirmation alert before deletion
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Confirm Deletion");
+            confirmationAlert.setHeaderText(null);
+            confirmationAlert.setContentText("Are you sure you want to delete all sellers with the name: '" + searchName + "'?");
+
+            Optional<ButtonType> result = confirmationAlert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Remove all matched sellers from the array list
+                sellerArrayList.removeAll(matchedSellers);
+                Alert deletionAlert = new Alert(Alert.AlertType.INFORMATION);
+                deletionAlert.setTitle("Deletion Success");
+                deletionAlert.setHeaderText(null);
+                deletionAlert.setContentText("All sellers with the name: '" + searchName + "' have been deleted.");
+                deletionAlert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Data missing");
+            alert.setHeaderText(null);
+            alert.setContentText("No seller found with that name");
+            alert.showAndWait();
+        }
+     } else {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Blank entry");
+        alert.setHeaderText(null);
+        alert.setContentText("Please enter a seller name to search.");
+        alert.showAndWait();
+    }
+});
+
+HBox searchBox2 = new HBox(20);
+searchBox2.getChildren().addAll(topBarEdit, searchLabeld, searchField2, searchButton2);
+searchBox2.setAlignment(Pos.CENTER); // Center elements horizontally
+
+VBox.setMargin(searchBox2, new Insets(50)); // Adjust vertical margin
+
+deleteSellerBox.getChildren().addAll(searchBox2);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //add customer scene
    VBox customerbox = new VBox(1000);
       customerbox.setSpacing(5);
@@ -687,21 +841,396 @@ adminSearchBox.getChildren().addAll(searchBox);
         alert.setHeaderText(null);
         alert.setContentText("Operation success");
         alert.showAndWait();
-        for (Seller seller : sellerArrayList) {
+        /*for (Seller seller : sellerArrayList) {
             System.out.println(seller.getUserName()+" "+seller.getUserPassword());
-        }
+        }*/
     }});
     
       
       customerbox.getChildren().addAll(topBar7,addcustomertitle,customername,addcustomerNfield,addcustomerpass,addcustomerPfield,addcustomer);
       customerbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //edit customer scene
-   //search customer scenr
-   //remove customer scene
+VBox customerSearchBox = new VBox(20); // Adjust spacing as needed
+customerSearchBox.setAlignment(Pos.CENTER); // Center elements vertically
+Scene customerSearchScene = new Scene(customerSearchBox, 1000, 600);
+editc.setOnAction(e->{mainstage.setScene(customerSearchScene);});
+customerSearchBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
 
+Button backToManageScene = new Button("Back");
+backToManageScene.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+backToManageScene.setOnAction(e -> mainstage.setScene(managescene));
+
+HBox topBarCustomerSearch = new HBox(backToManageScene);
+topBarCustomerSearch.setAlignment(Pos.TOP_LEFT);
+topBarCustomerSearch.setPadding(new Insets(50));
+
+Label searchLabelCustomer = new Label("Search Customers by Name:");
+searchLabelCustomer.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+searchLabelCustomer.setTextFill(Color.rgb(98, 42, 123));
+
+TextField searchFieldCustomer = new TextField();
+searchFieldCustomer.setPromptText("Enter customer name");
+searchFieldCustomer.setPrefWidth(300);
+
+Button searchButtonCustomer = new Button("Search");
+searchButtonCustomer.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+searchButtonCustomer.setOnAction(e -> {
+    String searchName = searchFieldCustomer.getText();
+    if (!searchName.isEmpty()) {
+        // Search functionality
+        ArrayList<Customer> matchedCustomers = new ArrayList<>();
+        for (Customer customer : customerArrayList) {
+            if (customer.getUserName().equalsIgnoreCase(searchName)) {
+                matchedCustomers.add(customer);
+            }
+        }
+        
+        // Update the content without clearing the existing nodes
+        VBox customerInfoBox = new VBox(10);
+        customerSearchBox.getChildren().remove(customerInfoBox); // Remove previous content if any
+
+        if (!matchedCustomers.isEmpty()) {
+            for (Customer matchedCustomer : matchedCustomers) {
+                HBox customerRow = new HBox(10);
+                customerRow.setAlignment(Pos.CENTER);
+                TextField customerNameField = new TextField(matchedCustomer.getUserName());
+                int customerId = matchedCustomer.getCustomerID();
+                Label customerIdLabel = new Label("Customer ID: " + customerId);
+                Button editButton = new Button("Edit");
+                editButton.setOnAction(event -> {
+                    // Perform edit on customer's name
+                    matchedCustomer.setUserName(customerNameField.getText());
+                    // You may update your data model or perform other actions as needed
+                });
+
+                customerRow.getChildren().addAll(new Label("Customer Name:"), customerNameField, customerIdLabel, editButton);
+                customerInfoBox.getChildren().add(customerRow);
+            }
+        } else {
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Data missing");
+            alert.setHeaderText(null);
+            alert.setContentText("no customer found with that name");
+            alert.showAndWait();
+        }
+
+        customerSearchBox.getChildren().add(customerInfoBox);
+    } else {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Blank entry");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter a customer name to search.");
+            alert.showAndWait();
+    }
+});
+
+HBox searchBoxCustomer = new HBox(20);
+searchBoxCustomer.getChildren().addAll(topBarCustomerSearch, searchLabelCustomer, searchFieldCustomer, searchButtonCustomer);
+searchBoxCustomer.setAlignment(Pos.CENTER); // Center elements horizontally
+
+VBox.setMargin(searchBoxCustomer, new Insets(50)); // Adjust vertical margin
+
+customerSearchBox.getChildren().addAll(searchBoxCustomer);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //search customer scene
+   VBox customerSearch = new VBox(20); // Adjust spacing as needed
+customerSearch.setAlignment(Pos.CENTER); // Center elements vertically
+Scene customerSearchsScene = new Scene(customerSearch, 1000, 600);
+searchc.setOnAction(e->{mainstage.setScene(customerSearchsScene);});
+customerSearch.setStyle("-fx-background-color: rgb(255, 222, 0);");
+
+Button backToManage = new Button("Back");
+backToManage.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+backToManage.setOnAction(e -> mainstage.setScene(managescene));
+
+HBox topCustomerSearch = new HBox(backToManage);
+topCustomerSearch.setAlignment(Pos.TOP_LEFT);
+topCustomerSearch.setPadding(new Insets(50));
+
+Label searchLCustomer = new Label("Search Customers :");
+searchLCustomer.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+searchLCustomer.setTextFill(Color.rgb(98, 42, 123));
+
+TextField searchFCustomer = new TextField();
+searchFCustomer.setPromptText("Enter customer name");
+searchFCustomer.setPrefWidth(300);
+
+Button searchBCustomer = new Button("Search");
+searchBCustomer.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+searchBCustomer.setOnAction(e -> {
+    String searchName = searchFCustomer.getText();
+    if (!searchName.isEmpty()) {
+        // Search functionality
+        ArrayList<Customer> matchedCustomers = new ArrayList<>();
+        for (Customer customer : customerArrayList) {
+            if (customer.getUserName().equalsIgnoreCase(searchName)) {
+                matchedCustomers.add(customer);
+            }
+        }
+        
+        // Update the content without clearing the existing nodes
+        VBox customerInfoBox = new VBox(10);
+        customerSearch.getChildren().remove(customerInfoBox); // Remove previous content if any
+
+        if (!matchedCustomers.isEmpty()) {
+            for (Customer matchedCustomer : matchedCustomers) {
+                HBox customerRow = new HBox(10);
+                customerRow.setAlignment(Pos.CENTER);
+                TextField customerNameField = new TextField(matchedCustomer.getUserName());
+                int customerId = matchedCustomer.getCustomerID();
+                Label customerIdLabel = new Label("Customer ID: " + customerId);
+                
+
+                customerRow.getChildren().addAll(new Label("Customer Found:"), customerNameField, customerIdLabel);
+                customerInfoBox.getChildren().add(customerRow);
+            }
+        } else {
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Data missing");
+            alert.setHeaderText(null);
+            alert.setContentText("no customer found with that name");
+            alert.showAndWait();
+        }
+
+        customerSearch.getChildren().add(customerInfoBox);
+    } else {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Blank entry");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter a customer name to search.");
+            alert.showAndWait();
+    }
+});
+HBox searchBoCustomer = new HBox(20);
+searchBoCustomer.getChildren().addAll(topCustomerSearch, searchLCustomer, searchFCustomer, searchBCustomer);
+searchBoCustomer.setAlignment(Pos.CENTER); // Center elements horizontally
+
+VBox.setMargin(searchBoCustomer, new Insets(50)); // Adjust vertical margin
+
+customerSearch.getChildren().addAll(searchBoCustomer);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //remove customer scene
+   VBox deleteCustomerBox = new VBox(20); // Adjust spacing as needed
+   deleteCustomerBox.setAlignment(Pos.CENTER); // Center elements vertically
+   Scene deleteCustomerScene = new Scene(deleteCustomerBox, 1000, 600);
+   removec.setOnAction(e -> { mainstage.setScene(deleteCustomerScene); });
+   deleteCustomerBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+   
+   Button backRemove = new Button("Back");
+   backRemove.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+   backRemove.setOnAction(e -> mainstage.setScene(managescene));
+   
+   HBox topBarRemove = new HBox(backRemove);
+   topBarRemove.setAlignment(Pos.TOP_LEFT);
+   topBarRemove.setPadding(new Insets(50));
+   
+   Label searchLabelc = new Label("Search Customers by Name:");
+   searchLabelc.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+   searchLabelc.setTextFill(Color.rgb(98, 42, 123));
+   
+   TextField searchFieldc = new TextField();
+   searchFieldc.setPromptText("Enter customer name");
+   searchFieldc.setPrefWidth(300);
+   
+   Button searchButtonc = new Button("Search");
+   searchButtonc.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+   searchButtonc.setOnAction(e -> {
+       String searchName = searchFieldc.getText();
+       if (!searchName.isEmpty()) {
+           // Search functionality
+           ArrayList<Customer> matchedCustomers = new ArrayList<>();
+           for (Customer customer : customerArrayList) {
+               if (customer.getUserName().equalsIgnoreCase(searchName)) {
+                   matchedCustomers.add(customer);
+               }
+           }
+           
+           if (!matchedCustomers.isEmpty()) {
+               // Confirmation alert before deletion
+               Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+               confirmationAlert.setTitle("Confirm Deletion");
+               confirmationAlert.setHeaderText(null);
+               confirmationAlert.setContentText("Are you sure you want to delete all customers with the name: '" + searchName + "'?");
+   
+               Optional<ButtonType> result = confirmationAlert.showAndWait();
+               if (result.isPresent() && result.get() == ButtonType.OK) {
+                   // Remove all matched customers from the array list
+                   customerArrayList.removeAll(matchedCustomers);
+                   Alert deletionAlert = new Alert(Alert.AlertType.INFORMATION);
+                   deletionAlert.setTitle("Deletion Success");
+                   deletionAlert.setHeaderText(null);
+                   deletionAlert.setContentText("All customers with the name: '" + searchName + "' have been deleted.");
+                   deletionAlert.showAndWait();
+               }
+           } else {
+               Alert alert = new Alert(Alert.AlertType.WARNING);
+               alert.setTitle("Data missing");
+               alert.setHeaderText(null);
+               alert.setContentText("No customer found with that name");
+               alert.showAndWait();
+           }
+       } else {
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+           alert.setTitle("Blank entry");
+           alert.setHeaderText(null);
+           alert.setContentText("Please enter a customer name to search.");
+           alert.showAndWait();
+       }
+   });
+   
+   HBox searchBoxc = new HBox(20);
+   searchBoxc.getChildren().addAll(topBarRemove, searchLabelc, searchFieldc, searchButtonc);
+   searchBoxc.setAlignment(Pos.CENTER); // Center elements horizontally
+   
+   VBox.setMargin(searchBoxc, new Insets(50)); // Adjust vertical margin
+   
+   deleteCustomerBox.getChildren().addAll(searchBoxc);
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //view dashboard scene (seller-customer-orderhistory)
+   VBox viewBox=new VBox(1000);
+      viewBox.setSpacing(60);
+      viewBox.setAlignment(Pos.TOP_CENTER); 
+      viewBox.setPrefWidth(80);
+   Scene viewscene=new Scene(viewBox,1000,600);  
+   view.setOnAction(e->{mainstage.setScene(viewscene);}); 
+     
+   viewBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+   Button backview =new Button("Back");
+   backview.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+   backview.setOnAction(e -> mainstage.setScene(adminscene));
+
+   HBox topBarview = new HBox(backview);
+   topBarview.setAlignment(Pos.TOP_LEFT);
+   topBarview.setPadding(new Insets(10));
+
+   Text viewdash=new Text("View Dashboard");
+   viewdash.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,40));
+   viewdash.setFill(Color.rgb(98, 42, 123));
+
+   HBox viewoption = new HBox(80);
+      Button sellerview = new Button("Seller Data");
+      Button customerview = new Button("Customer Data");
+      Button orederview = new Button("Order History Data");
+
+      sellerview.setPrefWidth(200);
+      sellerview.setPrefHeight(50);
+      customerview.setPrefWidth(200);
+      customerview.setPrefHeight(50);
+      orederview.setPrefWidth(200);
+      orederview.setPrefHeight(50);
+
+      sellerview.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      customerview.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      orederview.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      
+      sellerview.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      customerview.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      orederview.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+   
+      viewoption.setSpacing(50);
+      viewoption.getChildren().addAll(sellerview,customerview,orederview);
+      viewoption.setAlignment(Pos.CENTER);
+      viewoption.setTranslateX(0); // Set X position
+      viewoption.setTranslateY(0); // Set Y position
+
+      viewBox.getChildren().addAll(topBarview,viewdash,viewoption);
+
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //view sellers scene
-   //view customers scene
+
+    VBox viewsellerbox = new VBox(20); // Adjust spacing as needed
+    viewsellerbox.setAlignment(Pos.TOP_CENTER); // Center elements vertically
+    viewsellerbox.setPadding(new Insets(20));
+
+    Scene viewsellerscene=new Scene(viewsellerbox,1000,600);
+    sellerview.setOnAction(e->{mainstage.setScene(viewsellerscene);});
+    viewsellerbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+
+    Button backsellerview =new Button("Back");
+   backsellerview.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+   
+
+   HBox topBarsellerview = new HBox(backsellerview);
+   topBarsellerview.setAlignment(Pos.TOP_LEFT);
+   topBarsellerview.setPadding(new Insets(10));
+   
+   TextArea sellerDataTextArea = new TextArea();
+    sellerDataTextArea.setPrefSize(200, 150); // Set preferred size
+    sellerDataTextArea.setEditable(false); // Make the text area read-only
+
+    Button refreshseller =new Button("Refresh");
+   refreshseller.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+   refreshseller.setOnAction(e->{
+    StringBuilder sellerData = new StringBuilder();
+    for (Seller seller : sellerArrayList) {
+    sellerData.append("Name: ").append(seller.getUserName()).append(", Password: ").append(seller.getUserPassword()).append("\n");
+    }
+    sellerDataTextArea.setText(sellerData.toString());
+   });
+
+
+   Text viewseller=new Text("Seller Data");
+   viewseller.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,40));
+   viewseller.setFill(Color.rgb(98, 42, 123));
+
+   backsellerview.setOnAction(e -> {
+    sellerDataTextArea.clear();
+    mainstage.setScene(viewscene);
+    });
+    
+    viewsellerbox.getChildren().addAll(topBarsellerview,viewseller,sellerDataTextArea,refreshseller);
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //view customers scene
+
+    VBox viewcustomerbox = new VBox(20); // Adjust spacing as needed
+    viewcustomerbox.setAlignment(Pos.TOP_CENTER); // Center elements vertically
+    viewcustomerbox.setPadding(new Insets(20));
+
+    Scene viewcustomerscene=new Scene(viewcustomerbox,1000,600);
+    customerview.setOnAction(e->{mainstage.setScene(viewcustomerscene);});
+    viewcustomerbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+
+    Button backcustomerview =new Button("Back");
+   backcustomerview.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+   backcustomerview.setOnAction(e -> mainstage.setScene(viewscene));
+
+   HBox topBarcustomerview = new HBox(backcustomerview);
+   topBarcustomerview.setAlignment(Pos.TOP_LEFT);
+   topBarcustomerview.setPadding(new Insets(10));
+
+   TextArea customerDataTextArea = new TextArea();
+    customerDataTextArea.setPrefSize(200, 150); // Set preferred size
+    customerDataTextArea.setEditable(false); // Make the text area read-only
+
+   Button refresh =new Button("Refresh");
+   refresh.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+   refresh.setOnAction(e -> {
+    StringBuilder customerData = new StringBuilder();
+    for (Customer customer : customerArrayList) {
+    customerData.append("Name: ").append(customer.getUserName()).append(", Password: ").append(customer.getUserPassword()).append("\n");
+    }
+    customerDataTextArea.setText(customerData.toString());
+   });
+
+   Text viewcustomer=new Text("Customer Data");
+   viewcustomer.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,40));
+   viewcustomer.setFill(Color.rgb(98, 42, 123));
+
+   
+     
+    backcustomerview.setOnAction(e -> {
+    customerDataTextArea.clear();
+    mainstage.setScene(viewscene);
+    });
+
+    
+
+    viewcustomerbox.getChildren().addAll(topBarcustomerview,viewcustomer,customerDataTextArea,refresh);
+
+
+
    //view  oreders history scene
 
 
@@ -877,9 +1406,9 @@ SignupB.setOnMouseClicked(e -> {
     
         loadArrayLists();
         System.out.println("data loaded");
-        for (Seller string : sellerArrayList) {
+        /*for (Seller string : sellerArrayList) {
             System.out.println(string.getUserName());
-        }
+        }*/
         launch(args);
         saveArrayLists();
         System.out.println("data saved");
