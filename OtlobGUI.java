@@ -317,7 +317,7 @@ public class OtlobGUI extends Application {
       adminbox.getChildren().addAll(topBar,adminwlcm,adminmenu,choice2);
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        //seller scene
-       GridPane sellerpane = new GridPane();
+       Pane sellerpane = new Pane();
        Scene sellerscene = new Scene(sellerpane,1000,600);
         
        Seller.setOnAction(e -> {
@@ -325,23 +325,103 @@ public class OtlobGUI extends Application {
     mainstage.setScene(LiSu);});
        
        sellerpane.setStyle("-fx-background-color: rgb(255, 222, 0);");
-       //Home button to go to homepage(login page)
-        Button homepageS = new Button("Home Page");
+       //home button to go to homepage(login page)
+        Button homepageS = new Button("Logout");
        homepageS.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-       homepageS.setOnAction(e -> mainstage.setScene(LiSu));
+       homepageS.setOnAction(e -> mainstage.setScene(LoginChoice));
       
        Label sellerwlcm = new Label("Welcome Seller !");
         sellerwlcm.setStyle("-fx-text-fill: rgb(98, 42, 123)");
         sellerwlcm.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
      VBox sellerContent = new VBox(sellerwlcm);
-        VBox.setVgrow(sellerContent, Priority.ALWAYS);
-        sellerContent.setPadding(new Insets(0,0,0,400));
+        sellerContent.setLayoutX(400);
+        sellerContent.setLayoutY(10);
 
         HBox topBar2 = new HBox(homepageS);
         topBar2.setAlignment(Pos.TOP_LEFT);
-        topBar2.setPadding(new Insets(10));
+        topBar2.setLayoutY(20);
 
-        sellerpane.getChildren().addAll(sellerContent, topBar2);
+        
+        Button viewB = new Button("View");
+        Button manageB = new Button("Manage");
+        HBox sellermenu = new HBox();
+        viewB.setPrefWidth(200);
+      viewB.setPrefHeight(80);
+      manageB.setPrefWidth(200);
+      manageB.setPrefHeight(80);
+      
+      
+      viewB.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      manageB.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      viewB.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+      manageB.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+        
+        sellermenu.setSpacing(50);
+        sellermenu.setLayoutY(250);
+     sellermenu.setLayoutX(270);
+        Label sellerm = new Label("Seller Menu:");
+        sellerm.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123)");
+      sellerm.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+    sellerm.setLayoutY(200);
+     sellerm.setLayoutX(440);
+      sellermenu.getChildren().addAll(manageB,viewB);
+        sellerpane.getChildren().addAll(topBar2,sellermenu,sellerm, sellerContent);
+
+    //Seller manage Scene
+
+    Label mngDsbd = new Label("Manage Dashboard");
+    mngDsbd.setLayoutX(370);
+    mngDsbd.setLayoutY(150);
+    mngDsbd.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
+    mngDsbd.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);");
+    
+    Button sellerGoBack = new Button("Back");
+    sellerGoBack.setLayoutY(10);
+    sellerGoBack.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    Button ViewS = new Button("View");
+    Button RemoveS = new Button("Remove");
+    Button AddS = new Button("Add");
+    Button EditS = new Button("Edit");
+    HBox addEditRemoveSearch = new HBox(AddS,EditS,RemoveS,ViewS);
+   
+    ViewS.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    RemoveS.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    AddS.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    EditS.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    ViewS.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
+    RemoveS.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
+    AddS.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
+    EditS.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
+    
+    
+    addEditRemoveSearch.setSpacing(25);
+    addEditRemoveSearch.setLayoutX(300);
+    addEditRemoveSearch.setLayoutY(300);
+    
+    
+    Pane sellermanagepane = new Pane(addEditRemoveSearch,sellerGoBack,mngDsbd);
+    sellermanagepane.setStyle("-fx-background-color: rgb(255, 222, 0);");
+    Scene sellermanagescene = new Scene(sellermanagepane,1000,600);
+    manageB.setOnAction(e-> mainstage.setScene(sellermanagescene));
+    sellerGoBack.setOnAction(e-> mainstage.setScene(sellerscene));
+    
+    //Seller View scene
+    Label sllrdsbd = new Label("View Dashboard");
+     sllrdsbd.setLayoutX(370);
+    sllrdsbd.setLayoutY(150);
+    sllrdsbd.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
+    sllrdsbd.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);");
+    
+    Button sllrviewgoback = new Button("Back");
+    sllrviewgoback.setLayoutY(10);
+    sllrviewgoback.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");    
+    
+     Pane sellerviewpane = new Pane(sllrdsbd,sllrviewgoback);
+     sellerviewpane.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);");
+    Scene sellerviewscene = new Scene(sellerviewpane,1000,600);
+   
+   sllrviewgoback.setOnAction(e-> mainstage.setScene(sellerscene));
+   viewB.setOnAction(e->mainstage.setScene(sellerviewscene));
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //customer scene
      GridPane customerpane = new GridPane();
@@ -372,7 +452,7 @@ public class OtlobGUI extends Application {
         customerpane.getChildren().addAll(userContent, topBar3);
    
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   //manage scene
+   // admin manage scene
    
    VBox manageBox=new VBox(1000);
       manageBox.setSpacing(40);
