@@ -115,7 +115,7 @@ public class OtlobGUI extends Application {
 
         VBox logSign = new VBox(1000);
         logSign.setSpacing(7);
-        logSign.setAlignment(Pos.CENTER);
+        logSign.setAlignment(Pos.TOP_CENTER);
 
         Scene LiSu = new Scene(logSign, 1000, 600);
         Label LoginLabel = new Label("Enter Username:");
@@ -138,7 +138,10 @@ public class OtlobGUI extends Application {
         Button home = new Button("Go Back");
         home.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
         home.setAlignment(Pos.TOP_LEFT);
+        
         HBox lay = new HBox(home);
+        lay.setAlignment(Pos.TOP_LEFT);
+        lay.setPadding(new Insets(15));
 
         Button Login = new Button("Login");
         
@@ -148,6 +151,7 @@ public class OtlobGUI extends Application {
         logSign.getChildren().addAll(lay, LoginWelcome, LoginLabel, Logintype, LoginPass, LoginEnter, goToSignup, Login);
         logSign.setStyle("-fx-background-color: rgb(255, 222, 0);");
 
+        
      
 
      //Sign up scene
@@ -327,6 +331,7 @@ public class OtlobGUI extends Application {
        sellerpane.setStyle("-fx-background-color: rgb(255, 222, 0);");
        //home button to go to homepage(login page)
         Button homepageS = new Button("Logout");
+        homepageS.setLayoutX(10);
        homepageS.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
        homepageS.setOnAction(e -> mainstage.setScene(LoginChoice));
       
@@ -339,8 +344,8 @@ public class OtlobGUI extends Application {
 
         HBox topBar2 = new HBox(homepageS);
         topBar2.setAlignment(Pos.TOP_LEFT);
-        topBar2.setLayoutY(20);
-
+        topBar2.setLayoutY(10);
+        topBar2.setLayoutX(10);
         
         Button viewB = new Button("View");
         Button manageB = new Button("Manage");
@@ -377,8 +382,9 @@ public class OtlobGUI extends Application {
     
     Button sellerGoBack = new Button("Back");
     sellerGoBack.setLayoutY(10);
+    sellerGoBack.setLayoutX(10);
     sellerGoBack.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-    Button ViewS = new Button("View");
+    Button ViewS = new Button("Search");
     Button RemoveS = new Button("Remove");
     Button AddS = new Button("Add");
     Button EditS = new Button("Edit");
@@ -404,6 +410,8 @@ public class OtlobGUI extends Application {
     Scene sellermanagescene = new Scene(sellermanagepane,1000,600);
     manageB.setOnAction(e-> mainstage.setScene(sellermanagescene));
     sellerGoBack.setOnAction(e-> mainstage.setScene(sellerscene));
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
     
     //Seller View scene
     Label sllrdsbd = new Label("View Dashboard");
@@ -411,17 +419,41 @@ public class OtlobGUI extends Application {
     sllrdsbd.setLayoutY(150);
     sllrdsbd.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
     sllrdsbd.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);");
+    sllrdsbd.setMinHeight(150);
     
     Button sllrviewgoback = new Button("Back");
     sllrviewgoback.setLayoutY(10);
     sllrviewgoback.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");    
     
-     Pane sellerviewpane = new Pane(sllrdsbd,sllrviewgoback);
+    HBox sellerviewback=new HBox(sllrviewgoback);
+    sellerviewback.setAlignment(Pos.TOP_LEFT);
+    sellerviewback.setPadding(new Insets(10));
+
+    Button productdata = new Button("Product Data");
+    productdata.setAlignment(Pos.CENTER);
+    Button orderdata = new Button("Orders Data");
+    orderdata.setAlignment(Pos.CENTER);
+
+    HBox viewbox = new HBox(orderdata,productdata);
+    viewbox.setSpacing(30);
+    viewbox.setAlignment(Pos.CENTER);
+   
+    productdata.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    orderdata.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    productdata.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
+    orderdata.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
+    
+    
+    
+
+     VBox sellerviewpane = new VBox(sellerviewback,sllrdsbd,viewbox);
      sellerviewpane.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);");
+     sellerviewpane.setAlignment(Pos.TOP_CENTER);
     Scene sellerviewscene = new Scene(sellerviewpane,1000,600);
    
    sllrviewgoback.setOnAction(e-> mainstage.setScene(sellerscene));
    viewB.setOnAction(e->mainstage.setScene(sellerviewscene));
+   
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //customer scene
      GridPane customerpane = new GridPane();
@@ -451,8 +483,122 @@ public class OtlobGUI extends Application {
 
         customerpane.getChildren().addAll(userContent, topBar3);
    
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   // admin manage scene
+     
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   Seller sellerloggedin;
+        Login.setOnMouseClicked(e -> {
+  
+    if (selectedRole != null) {
+        
+        switch (selectedRole) {
+            case "Admin":
+                /*for (Admin admin : adminArrayList) {
+                  if(Logintype.getText().equals(admin.getUserName())&&LoginEnter.getText().equals(admin.getUserPassword())){*/
+
+                    mainstage.setScene(adminscene);
+                    /*break;
+                   }
+                }*/
+                break;
+            case "Seller":
+                
+                for (Seller seller : sellerArrayList) {
+                  if(Logintype.getText().equals(seller.getUserName())&&LoginEnter.getText().equals(seller.getUserPassword())){
+                    
+                    //sellerloggedin=new Seller(seller);
+                    mainstage.setScene(sellerscene);
+                    break;
+                  }
+                }
+                break;
+            case "Customer":
+                for (Customer customer : customerArrayList) {
+                  if(Logintype.getText().equals(customer.getUserName())&&LoginEnter.getText().equals(customer.getUserPassword())){
+                    mainstage.setScene(customerscene);
+                    break;
+                  }
+                }
+                break;
+            default:
+               
+                break;
+        }
+    } else {
+        
+         Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Role Selection");
+        alert.setHeaderText(null);
+        alert.setContentText("Please go back and select Admin/Seller/Customer.");
+        alert.showAndWait();
+    }
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//seller add product
+
+    VBox selleraddproduct = new VBox(1000);
+      selleraddproduct.setSpacing(5);
+      selleraddproduct.setAlignment(Pos.TOP_CENTER);
+
+      Scene selleraddproductscene=new Scene(selleraddproduct,1000,600);
+      AddS.setOnAction(e->{mainstage.setScene(selleraddproductscene);});
+
+      Button addPback =new Button("Back");
+      addPback.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      addPback.setOnAction(e -> mainstage.setScene(sellermanagescene));
+
+      HBox topBaraddP = new HBox(addPback);
+      topBaraddP.setAlignment(Pos.TOP_LEFT);
+      topBaraddP.setPadding(new Insets(50));
+      
+      Label addcProducttitle=new Label("Add Product Data");
+      addcProducttitle.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+      addcProducttitle.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 40));
+      addcProducttitle.setAlignment(Pos.TOP_CENTER);
+      addcProducttitle.setMinHeight(150);
+
+      Label productname = new Label("Enter Product Name:");
+      productname.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+      productname.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+      TextField addproductNfield = new TextField();
+      addproductNfield.setMaxSize(110, 110);
+        
+      Label addproductprice = new Label("Enter Product Price");
+      addproductprice.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+      addproductprice.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+      TextField addproductPfield = new TextField();
+      addproductPfield.setMaxSize(110, 110);
+
+      Button addproduct = new Button("Add Product");
+      addproduct.setOnAction(e->{
+        if (addproductNfield.getText().isBlank()||addproductPfield.getText().isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("please fill in the data first");
+        alert.showAndWait();
+        }
+       else{ int id = productArrayList.size() +1;
+        Double price= Double.parseDouble(addproductPfield.getText());
+        Product newProduct = new Product(id, addproductNfield.getText(), price);
+        //sellerloggedin.addProduct(productArrayList, newProduct);
+        
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("New Product added");
+        alert.setHeaderText(null);
+        alert.setContentText("Operation success");
+        alert.showAndWait();
+        /*for (Seller seller : sellerArrayList) {
+            System.out.println(seller.getUserName()+" "+seller.getUserPassword());
+        }*/
+    }});
+    
+      
+      selleraddproduct.getChildren().addAll(topBaraddP,addcProducttitle,productname,addproductNfield,addproductprice,addproductPfield,addproduct);
+      selleraddproduct.setStyle("-fx-background-color: rgb(255, 222, 0);");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // admin manage scene
    
    VBox manageBox=new VBox(1000);
       manageBox.setSpacing(40);
@@ -1316,48 +1462,7 @@ customerSearch.getChildren().addAll(searchBoCustomer);
 
 //Login and signup events 
 
-Login.setOnMouseClicked(e -> {
-  
-    if (selectedRole != null) {
-        
-        switch (selectedRole) {
-            case "Admin":
-                /*for (Admin admin : adminArrayList) {
-                  if(Logintype.getText().equals(admin.getUserName())&&LoginEnter.getText().equals(admin.getUserPassword())){*/
-                    mainstage.setScene(adminscene);
-                    /*break;
-                   }
-                }*/
-                break;
-            case "Seller":
-                for (Seller seller : sellerArrayList) {
-                  if(Logintype.getText().equals(seller.getUserName())&&LoginEnter.getText().equals(seller.getUserPassword())){
-                    mainstage.setScene(sellerscene);
-                    break;
-                  }
-                }
-                break;
-            case "Customer":
-                for (Customer customer : customerArrayList) {
-                  if(Logintype.getText().equals(customer.getUserName())&&LoginEnter.getText().equals(customer.getUserPassword())){
-                    mainstage.setScene(customerscene);
-                    break;
-                  }
-                }
-                break;
-            default:
-               
-                break;
-        }
-    } else {
-        
-         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Role Selection");
-        alert.setHeaderText(null);
-        alert.setContentText("Please go back and select Admin/Seller/Customer.");
-        alert.showAndWait();
-    }
-});
+
 
 SignupB.setOnMouseClicked(e -> {
     if (selectedRole != null) {
