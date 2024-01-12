@@ -30,12 +30,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-/*
-
-author @Hamza Magdy
-
-*/
-
 public class OtlobGUI extends Application {
 
 // role for choice admin/customer/seller IMPORTANT
@@ -145,15 +139,12 @@ public class OtlobGUI extends Application {
 
         Button Login = new Button("Login");
         
-
         TextField LoginEnter = new TextField();
         LoginEnter.setMaxSize(110, 110);
         logSign.getChildren().addAll(lay, LoginWelcome, LoginLabel, Logintype, LoginPass, LoginEnter, goToSignup, Login);
         logSign.setStyle("-fx-background-color: rgb(255, 222, 0);");
 
-        
-     
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      //Sign up scene
      BorderPane signup = new BorderPane();
      signup.setPrefSize(1000,600);
@@ -173,14 +164,12 @@ public class OtlobGUI extends Application {
      Label enterpass = new Label("Enter Password: ");
      TextField signuppass = new TextField();
      
-    
      enterpass.setStyle("-fx-text-fill: rgb(98, 42, 123)");
      enterusr.setStyle("-fx-text-fill: rgb(98, 42, 123)");
       enterusr.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,30));
       enterpass.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,30));
        
       Button SignupB = new Button("Create Account");
-      
       
       signupusr.setMaxWidth(110);
      
@@ -193,7 +182,6 @@ public class OtlobGUI extends Application {
       back.setOnMouseClicked(e-> mainstage.setScene(LiSu));
       back.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
      
-      
        Label crt = new Label("Create a new account: ");
         crt.setStyle("-fx-text-fill: rgb(98, 42, 123)");
         crt.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
@@ -210,16 +198,27 @@ public class OtlobGUI extends Application {
       Pane main = new Pane();
       main.setStyle("-fx-background-color: rgb(255, 222, 0);");
       
-      Text Welcome = new Text("Welcome");
-        Welcome.setTranslateX(405); 
-        Welcome.setTranslateY(150);  
-        Welcome.setFont(Font.font("Impact",FontWeight.BOLD,50));
-        Welcome.setFill(Color.rgb(98, 42, 123));
+      Text otlob = new Text("Otlob");
+        otlob.setTranslateX(410); 
+        otlob.setTranslateY(180);  
+        otlob.setFont(Font.font("Impact",FontWeight.BOLD,90));
+        otlob.setFill(Color.rgb(98, 42, 123));
         
+        Text web = new Text("Web Application");
+        web.setTranslateX(410); 
+        web.setTranslateY(220);  
+        web.setFont(Font.font("Impact",FontWeight.BOLD,30));
+        web.setFill(Color.rgb(98, 42, 123));
+
+        Text Welcome = new Text("Welcome to...");
+        Welcome.setTranslateX(440); 
+        Welcome.setTranslateY(75);  
+        Welcome.setFont(Font.font("Impact",FontWeight.BOLD,25));
+        Welcome.setFill(Color.rgb(98, 42, 123));
         
         Text Log = new Text("Login As:");
         Log.setTranslateX(465); 
-        Log.setTranslateY(250);
+        Log.setTranslateY(270);
         Log.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,20));
         Log.setFill(Color.rgb(98, 42, 123));
         
@@ -241,19 +240,16 @@ public class OtlobGUI extends Application {
       Seller.setFont(Font.font("Impact", FontWeight.BOLD, 22));
       Customer.setFont(Font.font("Impact", FontWeight.BOLD, 22));
       
-   
       choice.setSpacing(50);
       choice.getChildren().addAll(Admin,Seller,Customer);
       choice.setAlignment(Pos.CENTER);
        choice.setTranslateX(150); // Set X position
         choice.setTranslateY(300); // Set Y position
       
-      main.getChildren().addAll(choice,Welcome,Log);
+      main.getChildren().addAll(choice,Welcome,Log,otlob,web);
   
       Scene LoginChoice = new Scene(main,1000,600);
       
-      
- 
       home.setOnMouseClicked(e-> mainstage.setScene(LoginChoice));
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //admin scene 
@@ -278,27 +274,17 @@ public class OtlobGUI extends Application {
         adminwlcm.setPrefHeight(100);
 
         Text adminmenu = new Text("Admin menu :");
-        //adminmenu.setTranslateX(50); 
-        //adminmenu.setTranslateY(50);
+        
         adminmenu.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,20));
         adminmenu.setFill(Color.rgb(98, 42, 123));
-        
-       /* VBox adminContent = new VBox(adminwlcm,adminmenu);
-        VBox.setVgrow(adminContent, Priority.ALWAYS);
-        adminContent.setPadding(new Insets(0,0,0,400));
-
-        */ 
+         
         HBox topBar = new HBox(homepageA);
         topBar.setAlignment(Pos.TOP_LEFT);
         topBar.setPadding(new Insets(10));
-
-        
-        
-        
+  
       HBox choice2 = new HBox(80);
       Button manage = new Button("Manage");
       Button view = new Button("View");
-      
       
       manage.setPrefWidth(200);
       manage.setPrefHeight(80);
@@ -310,14 +296,12 @@ public class OtlobGUI extends Application {
       manage.setFont(Font.font("Impact", FontWeight.BOLD, 22));
       view.setFont(Font.font("Impact", FontWeight.BOLD, 22));
       
-   
       choice2.setSpacing(50);
       choice2.getChildren().addAll(manage,view);
       choice2.setAlignment(Pos.CENTER);
        choice2.setTranslateX(0); // Set X position
         choice2.setTranslateY(0); // Set Y position
-
-        
+ 
       adminbox.getChildren().addAll(topBar,adminwlcm,adminmenu,choice2);
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        //seller scene
@@ -355,7 +339,6 @@ public class OtlobGUI extends Application {
       manageB.setPrefWidth(200);
       manageB.setPrefHeight(80);
       
-      
       viewB.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
       manageB.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
       viewB.setFont(Font.font("Impact", FontWeight.BOLD, 22));
@@ -371,7 +354,7 @@ public class OtlobGUI extends Application {
      sellerm.setLayoutX(440);
       sellermenu.getChildren().addAll(manageB,viewB);
         sellerpane.getChildren().addAll(topBar2,sellermenu,sellerm, sellerContent);
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Seller manage Scene
 
     Label mngDsbd = new Label("Manage Dashboard");
@@ -399,11 +382,9 @@ public class OtlobGUI extends Application {
     AddS.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
     EditS.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
     
-    
     addEditRemoveSearch.setSpacing(25);
     addEditRemoveSearch.setLayoutX(300);
     addEditRemoveSearch.setLayoutY(300);
-    
     
     Pane sellermanagepane = new Pane(addEditRemoveSearch,sellerGoBack,mngDsbd);
     sellermanagepane.setStyle("-fx-background-color: rgb(255, 222, 0);");
@@ -411,7 +392,6 @@ public class OtlobGUI extends Application {
     manageB.setOnAction(e-> mainstage.setScene(sellermanagescene));
     sellerGoBack.setOnAction(e-> mainstage.setScene(sellerscene));
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
     
     //Seller View scene
     Label sllrdsbd = new Label("View Dashboard");
@@ -434,7 +414,7 @@ public class OtlobGUI extends Application {
     Button orderdata = new Button("Orders Data");
     orderdata.setAlignment(Pos.CENTER);
 
-    HBox viewbox = new HBox(orderdata,productdata);
+    HBox viewbox = new HBox(productdata,orderdata);
     viewbox.setSpacing(30);
     viewbox.setAlignment(Pos.CENTER);
    
@@ -443,9 +423,6 @@ public class OtlobGUI extends Application {
     productdata.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
     orderdata.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
     
-    
-    
-
      VBox sellerviewpane = new VBox(sellerviewback,sllrdsbd,viewbox);
      sellerviewpane.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);");
      sellerviewpane.setAlignment(Pos.TOP_CENTER);
@@ -456,36 +433,140 @@ public class OtlobGUI extends Application {
    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //customer scene
-     GridPane customerpane = new GridPane();
-       Scene customerscene = new Scene(customerpane,1000,600);
-        
-        Customer.setOnAction(e -> {
-    selectedRole = "Customer";
-    mainstage.setScene(LiSu);});
-        
-        customerpane.setStyle("-fx-background-color: rgb(255, 222, 0);");
-       //Home button to go to homepage(login page)
-        Button homepageC = new Button("Home Page");
-       homepageC.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-       homepageC.setOnAction(e -> mainstage.setScene(LiSu));
-      
-       Label userwlcm = new Label("Welcome Customer !");
-
-        userwlcm.setStyle("-fx-text-fill: rgb(98, 42, 123)");
-        userwlcm.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
-        VBox userContent = new VBox(userwlcm);
-        VBox.setVgrow(userContent, Priority.ALWAYS);
-        userContent.setPadding(new Insets(0,0,0,396));
-
-        HBox topBar3 = new HBox(homepageC);
-        topBar3.setAlignment(Pos.TOP_LEFT);
-        topBar3.setPadding(new Insets(10));
-
-        customerpane.getChildren().addAll(userContent, topBar3);
-   
+    Pane customerpane = new Pane();
+    Scene customerscene = new Scene(customerpane,1000,600);
      
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   Seller sellerloggedin;
+     Customer.setOnAction(e -> {
+ selectedRole = "Customer";
+ mainstage.setScene(LiSu);});
+     
+     customerpane.setStyle("-fx-background-color: rgb(255, 222, 0);");
+    //Home button to go to homepage(login page)
+     Button homepageC = new Button("Logout");
+    homepageC.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    homepageC.setOnAction(e -> mainstage.setScene(LoginChoice));
+    homepageC.setLayoutY(15);
+    
+    Label userwlcm = new Label("Welcome Customer !");
+
+     userwlcm.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+     userwlcm.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
+    userwlcm.setLayoutX(373);
+    userwlcm.setLayoutY(10);
+
+     HBox topBar3 = new HBox(homepageC);
+     topBar3.setAlignment(Pos.TOP_LEFT);
+     topBar3.setPadding(new Insets(10));
+     
+     Button StartOrdering = new Button("Start Ordering");
+     Button TrackOrderHistory = new Button("Track Order History");
+     StartOrdering.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+     TrackOrderHistory.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+     TrackOrderHistory.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+     StartOrdering.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+     
+     HBox customerminimenu = new HBox(StartOrdering,TrackOrderHistory);
+     customerminimenu.setLayoutX(290);
+     customerminimenu.setLayoutY(250);
+     customerminimenu.setSpacing(15);
+     
+     Label customerMenu = new Label("Customer Menu");
+     customerMenu.setLayoutX(412);
+     customerMenu.setLayoutY(200);
+     customerMenu.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+     customerMenu.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+     customerpane.getChildren().addAll(homepageC,userwlcm,customerMenu,customerminimenu);
+     
+     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     //Start Ordering customer scene 
+     Pane StartOrderingpane = new Pane();
+     Scene StarOrdering = new Scene(StartOrderingpane,1000,600);
+     StartOrderingpane.setStyle("-fx-background-color: rgb(255, 222, 0);");
+     Label StartOrd = new Label("Start Ordering Dashboard");
+     StartOrd.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+     StartOrd.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
+     StartOrd.setLayoutX(350);
+
+     Button srchvendors = new Button("Search Vendors & Products");
+    Button addProductToCart = new Button("Add Product to Cart");
+    Button removeProductFromCart = new Button("Remove Product From Cart"); 
+    Button clearCart = new Button("Clear Cart");
+    Button viewCart = new Button("View Cart");
+    Button confirmCart = new Button("Confirm Cart");
+    
+    srchvendors.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    srchvendors.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+    addProductToCart.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    addProductToCart.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+    removeProductFromCart.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    removeProductFromCart.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+    clearCart.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    clearCart.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+    viewCart.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    viewCart.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+
+    confirmCart.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    confirmCart.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+            
+    HBox actions1= new HBox(srchvendors,addProductToCart,removeProductFromCart);
+     actions1.setSpacing(15);
+     actions1.setLayoutX(65);
+     actions1.setLayoutY(200);
+    HBox actions2= new HBox(clearCart,viewCart,confirmCart);
+     actions2.setSpacing(15);
+     actions2.setLayoutX(260);
+     actions2.setLayoutY(300);
+     
+     Button bacK = new Button("Go Back");
+    bacK.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+     
+     StartOrdering.setOnAction(e->mainstage.setScene(StarOrdering)); 
+    bacK.setOnAction(e->mainstage.setScene(customerscene)); 
+ 
+     StartOrderingpane.getChildren().addAll(bacK,StartOrd,actions1,actions2);
+
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ //Track Order customer scene
+    Pane TrackOrderPane = new Pane();
+    TrackOrderPane.setStyle("-fx-background-color: rgb(255, 222, 0);");
+    Scene TrackOrder = new Scene(TrackOrderPane,1000,600);
+    Button backk = new Button("Go Back");
+    backk.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+
+    Label TrackOrdr = new Label("Track Order History Dashboard");
+    TrackOrdr.setLayoutX(314);
+    TrackOrdr.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+    TrackOrdr.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
+ 
+    Button viewAllOrderDetails = new Button("View all Orders and their details");
+    Button TrackOrderStatus = new Button("View Order Status");
+    Button RateOrders = new Button("Rate Order");
+ 
+     RateOrders.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    RateOrders.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+         
+     TrackOrderStatus.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    TrackOrderStatus.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+         
+     viewAllOrderDetails.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    viewAllOrderDetails.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+         
+    HBox acTions = new HBox(viewAllOrderDetails,TrackOrderStatus,RateOrders);
+    acTions.setSpacing(15);
+    acTions.setLayoutX(118);
+    acTions.setLayoutY(250);
+ 
+    TrackOrderPane.getChildren().addAll(backk,TrackOrdr,acTions);
+    TrackOrderHistory.setOnAction(e->mainstage.setScene(TrackOrder));
+    backk.setOnAction(e->mainstage.setScene(customerscene));
+   
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Seller[] sellerLoggedInContainer = new Seller[1];
         Login.setOnMouseClicked(e -> {
   
     if (selectedRole != null) {
@@ -501,15 +582,15 @@ public class OtlobGUI extends Application {
                 }*/
                 break;
             case "Seller":
-                
+
                 for (Seller seller : sellerArrayList) {
-                  if(Logintype.getText().equals(seller.getUserName())&&LoginEnter.getText().equals(seller.getUserPassword())){
-                    
-                    //sellerloggedin=new Seller(seller);
-                    mainstage.setScene(sellerscene);
-                    break;
-                  }
+                    if (Logintype.getText().equals(seller.getUserName()) && LoginEnter.getText().equals(seller.getUserPassword())) {
+                        sellerLoggedInContainer[0] = seller;
+                        mainstage.setScene(sellerscene);
+                        break;
+                    }
                 }
+
                 break;
             case "Customer":
                 for (Customer customer : customerArrayList) {
@@ -579,11 +660,17 @@ public class OtlobGUI extends Application {
         alert.setContentText("please fill in the data first");
         alert.showAndWait();
         }
+
        else{ int id = productArrayList.size() +1;
         Double price= Double.parseDouble(addproductPfield.getText());
         Product newProduct = new Product(id, addproductNfield.getText(), price);
-        //sellerloggedin.addProduct(productArrayList, newProduct);
+        sellerLoggedInContainer[0].addProduct(productArrayList, newProduct);
+        /*for (Product product : sellerLoggedInContainer[0].sellerProducts) {
+            System.out.println(product.productName);
+        }
         
+        System.out.println(sellerLoggedInContainer[0].sellerProducts);
+*/
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("New Product added");
         alert.setHeaderText(null);
@@ -597,6 +684,316 @@ public class OtlobGUI extends Application {
       
       selleraddproduct.getChildren().addAll(topBaraddP,addcProducttitle,productname,addproductNfield,addproductprice,addproductPfield,addproduct);
       selleraddproduct.setStyle("-fx-background-color: rgb(255, 222, 0);");
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      //seller edit product
+      VBox selleredithBox = new VBox(20); // Adjust spacing as needed
+      selleredithBox.setAlignment(Pos.CENTER); // Center elements vertically
+      Scene sellereditScene = new Scene(selleredithBox, 1000, 600);
+      EditS.setOnAction(e -> mainstage.setScene(sellereditScene));
+      selleredithBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+      
+      Button backSEdit = new Button("Back");
+      backSEdit.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      
+      
+      HBox topBarSEdit = new HBox(backSEdit);
+      topBarSEdit.setAlignment(Pos.TOP_LEFT);
+      topBarSEdit.setPadding(new Insets(50));
+      
+      Label searchLabelSedit = new Label("Search Products by Name:");
+      searchLabelSedit.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+      searchLabelSedit.setTextFill(Color.rgb(98, 42, 123));
+      
+      TextField searchFieldSedit = new TextField();
+      searchFieldSedit.setPromptText("Enter product name");
+      searchFieldSedit.setPrefWidth(300);
+      
+      Button searchButtonSedit = new Button("Search");
+      searchButtonSedit.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      searchButtonSedit.setOnAction(e -> {
+          String searchName = searchFieldSedit.getText();
+          if (!searchName.isEmpty()) {
+              // Search functionality
+              ArrayList<Product> matchedProducts = new ArrayList<>();
+              for (Product product : productArrayList) {
+                  if (product.getProductName().equalsIgnoreCase(searchName)) {
+                      matchedProducts.add(product);
+                  }
+              }
+      
+              // Update the content without clearing the existing nodes
+              VBox productInfoBox = new VBox(10);
+              selleredithBox.getChildren().remove(productInfoBox); // Remove previous content if any
+      
+              if (!matchedProducts.isEmpty()) {
+                  for (Product matchedProduct : matchedProducts) {
+                      HBox productRow = new HBox(10);
+                      productRow.setAlignment(Pos.CENTER);
+                      TextField productNameField = new TextField(matchedProduct.getProductName());
+                      TextField productPriceField = new TextField(String.valueOf(matchedProduct.getProductPrice()));
+      
+                      int productId = matchedProduct.getProductID();
+                      Label productIdLabel = new Label("Product ID: " + productId);
+      
+                      Button editButton = new Button("Edit");
+                      editButton.setOnAction(event -> {
+                          // Perform edit on product's name and price
+                          matchedProduct.setProductName(productNameField.getText());
+                          try {
+                              double newPrice = Double.parseDouble(productPriceField.getText());
+                              matchedProduct.setProductPrice(newPrice);
+                              // You may update your data model or perform other actions as needed
+                          } catch (NumberFormatException ex) {
+                              Alert alert = new Alert(Alert.AlertType.WARNING);
+                              alert.setTitle("Invalid input");
+                              alert.setHeaderText(null);
+                              alert.setContentText("Please enter a valid price.");
+                              alert.showAndWait();
+                          }
+                      });
+      
+                      productRow.getChildren().addAll(new Label("Product Name:"), productNameField,
+                              new Label("Product Price:"), productPriceField, productIdLabel, editButton);
+                      productInfoBox.getChildren().add(productRow);
+                  }
+              } else {
+                  Alert alert = new Alert(Alert.AlertType.WARNING);
+                  alert.setTitle("Data missing");
+                  alert.setHeaderText(null);
+                  alert.setContentText("No product found with that name.");
+                  alert.showAndWait();
+              }
+      
+              selleredithBox.getChildren().add(productInfoBox);
+          } else {
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+              alert.setTitle("Blank entry");
+              alert.setHeaderText(null);
+              alert.setContentText("Please enter a product name to search.");
+              alert.showAndWait();
+          }
+      });
+      
+      HBox editBox = new HBox(20);
+      editBox.getChildren().addAll(topBarSEdit, searchLabelSedit, searchFieldSedit, searchButtonSedit);
+      editBox.setAlignment(Pos.CENTER); // Center elements horizontally
+      
+      VBox.setMargin(editBox, new Insets(50)); // Adjust vertical margin
+      
+      selleredithBox.getChildren().addAll(editBox);
+      backSEdit.setOnAction(e ->{
+        selleredithBox.getChildren().clear();
+      selleredithBox.getChildren().addAll(editBox);
+      mainstage.setScene(sellermanagescene);}
+    );
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// seller remove product
+VBox removeProductBox = new VBox(20); // Adjust spacing as needed
+removeProductBox.setAlignment(Pos.CENTER); // Center elements vertically
+Scene removeProductScene = new Scene(removeProductBox, 1000, 600);
+RemoveS.setOnAction(e -> { mainstage.setScene(removeProductScene); });
+removeProductBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+
+Button backsRemove = new Button("Back");
+backsRemove.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+backsRemove.setOnAction(e -> mainstage.setScene(sellermanagescene));
+
+HBox topBarsRemove = new HBox(backsRemove);
+topBarsRemove.setAlignment(Pos.TOP_LEFT);
+topBarsRemove.setPadding(new Insets(50));
+
+Label searchLabelSrem = new Label("Search Products by Name:");
+searchLabelSrem.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+searchLabelSrem.setTextFill(Color.rgb(98, 42, 123));
+
+TextField searchFieldsrem = new TextField();
+searchFieldsrem.setPromptText("Enter product name");
+searchFieldsrem.setPrefWidth(300);
+
+Button searchButtonsrem = new Button("Search");
+searchButtonsrem.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+searchButtonsrem.setOnAction(e -> {
+    String searchName = searchFieldsrem.getText();
+    if (!searchName.isEmpty()) {
+        // Search functionality
+        ArrayList<Product> matchedProducts = new ArrayList<>();
+        for (Product product : sellerLoggedInContainer[0].sellerProducts) {
+            if (product.getProductName().equalsIgnoreCase(searchName)) {
+                matchedProducts.add(product);
+            }
+        }
+        
+        if (!matchedProducts.isEmpty()) {
+            // Confirmation alert before deletion
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Confirm Deletion");
+            confirmationAlert.setHeaderText(null);
+            confirmationAlert.setContentText("Are you sure you want to delete all products with the name: '" + searchName + "'?");
+
+            Optional<ButtonType> result = confirmationAlert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Remove all matched products from the array list
+                sellerLoggedInContainer[0].sellerProducts.removeAll(matchedProducts);
+                productArrayList.removeAll(matchedProducts);
+                Alert deletionAlert = new Alert(Alert.AlertType.INFORMATION);
+                deletionAlert.setTitle("Deletion Success");
+                deletionAlert.setHeaderText(null);
+                deletionAlert.setContentText("All products with the name: '" + searchName + "' have been deleted.");
+                deletionAlert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Data missing");
+            alert.setHeaderText(null);
+            alert.setContentText("No product found with that name");
+            alert.showAndWait();
+        }
+     } else {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Blank entry");
+        alert.setHeaderText(null);
+        alert.setContentText("Please enter a product name to search.");
+        alert.showAndWait();
+    }
+});
+
+HBox searchBoxsrem = new HBox(20);
+searchBoxsrem.getChildren().addAll(topBarsRemove, searchLabelSrem, searchFieldsrem, searchButtonsrem);
+searchBoxsrem.setAlignment(Pos.CENTER); // Center elements horizontally
+
+VBox.setMargin(searchBoxsrem, new Insets(50)); // Adjust vertical margin
+
+removeProductBox.getChildren().addAll(searchBoxsrem);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//seller search product
+VBox sellersearchBox = new VBox(20); // Adjust spacing as needed
+      sellersearchBox.setAlignment(Pos.CENTER); // Center elements vertically
+      Scene sellersearchScene = new Scene(sellersearchBox, 1000, 600);
+      ViewS.setOnAction(e -> mainstage.setScene(sellersearchScene));
+      sellersearchBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+      
+      Button backSsearch = new Button("Back");
+      backSsearch.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      
+      
+      HBox topBarSsearch = new HBox(backSsearch);
+      topBarSsearch.setAlignment(Pos.TOP_LEFT);
+      topBarSsearch.setPadding(new Insets(50));
+      
+      Label searchLabelSsearch = new Label("Search Products by Name:");
+      searchLabelSsearch.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+      searchLabelSsearch.setTextFill(Color.rgb(98, 42, 123));
+      
+      TextField searchFieldSsearch = new TextField();
+      searchFieldSsearch.setPromptText("Enter product name");
+      searchFieldSsearch.setPrefWidth(300);
+      
+      Button searchButtonSsearch = new Button("Search");
+      searchButtonSsearch.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rgb(98, 42, 123); -fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      searchButtonSsearch.setOnAction(e -> {
+          String searchName = searchFieldSsearch.getText();
+          if (!searchName.isEmpty()) {
+              // Search functionality
+              ArrayList<Product> matchedProducts = new ArrayList<>();
+              for (Product product : productArrayList) {
+                  if (product.getProductName().equalsIgnoreCase(searchName)) {
+                      matchedProducts.add(product);
+                  }
+              }
+      
+              // Update the content without clearing the existing nodes
+              VBox productInfoBox = new VBox(10);
+              selleredithBox.getChildren().remove(productInfoBox); // Remove previous content if any
+      
+              if (!matchedProducts.isEmpty()) {
+                  for (Product matchedProduct : matchedProducts) {
+                      HBox productRow = new HBox(10);
+                      productRow.setAlignment(Pos.CENTER);
+                      TextField productNameField = new TextField(matchedProduct.getProductName());
+                      TextField productPriceField = new TextField(String.valueOf(matchedProduct.getProductPrice()));
+      
+                      int productId = matchedProduct.getProductID();
+                      Label productIdLabel = new Label("Product ID: " + productId);
+      
+                      
+      
+                      productRow.getChildren().addAll(new Label("Product Name:"), productNameField,
+                      new Label("Product Price:"), productPriceField, productIdLabel);
+                      productInfoBox.getChildren().add(productRow);
+                  }
+              } else {
+                  Alert alert = new Alert(Alert.AlertType.WARNING);
+                  alert.setTitle("Data missing");
+                  alert.setHeaderText(null);
+                  alert.setContentText("No product found with that name.");
+                  alert.showAndWait();
+              }
+      
+              sellersearchBox.getChildren().add(productInfoBox);
+          } else {
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+              alert.setTitle("Blank entry");
+              alert.setHeaderText(null);
+              alert.setContentText("Please enter a product name to search.");
+              alert.showAndWait();
+          }
+      });
+      
+      HBox SsearchBox = new HBox(20);
+      SsearchBox.getChildren().addAll(topBarSsearch, searchLabelSsearch, searchFieldSsearch, searchButtonSsearch);
+      SsearchBox.setAlignment(Pos.CENTER); // Center elements horizontally
+      
+      VBox.setMargin(SsearchBox, new Insets(50)); // Adjust vertical margin
+      
+      sellersearchBox.getChildren().addAll(SsearchBox);
+      backSsearch.setOnAction(e ->{
+        sellersearchBox.getChildren().clear();
+      sellersearchBox.getChildren().addAll(SsearchBox);
+      mainstage.setScene(sellermanagescene);}
+    );
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// seller view products
+VBox viewPsellerbox = new VBox(20); // Adjust spacing as needed
+    viewPsellerbox.setAlignment(Pos.TOP_CENTER); // Center elements vertically
+    viewPsellerbox.setPadding(new Insets(20));
+
+    Scene viewPsellerscene=new Scene(viewPsellerbox,1000,600);
+    productdata.setOnAction(e->{mainstage.setScene(viewPsellerscene);});
+    viewPsellerbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+
+    Button backsellerviewP =new Button("Back");
+   backsellerviewP.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+   
+
+   HBox topBarsellerviewP = new HBox(backsellerviewP);
+   topBarsellerviewP.setAlignment(Pos.TOP_LEFT);
+   topBarsellerviewP.setPadding(new Insets(10));
+   
+   TextArea sellerPDataTextArea = new TextArea();
+    sellerPDataTextArea.setPrefSize(200, 150); // Set preferred size
+    sellerPDataTextArea.setEditable(false); // Make the text area read-only
+
+    Button refreshsellerP =new Button("Refresh");
+   refreshsellerP.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+   refreshsellerP.setOnAction(e->{
+    StringBuilder productData = new StringBuilder();
+    for (Product product : sellerLoggedInContainer[0].sellerProducts) {
+    productData.append("Name: ").append(product.getProductName()).append(", Price: ").append(product.getProductPrice()).append("\n");
+    }
+    sellerPDataTextArea.setText(productData.toString());
+   });
+
+
+   Text viewPseller=new Text("Seller Data");
+   viewPseller.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,40));
+   viewPseller.setFill(Color.rgb(98, 42, 123));
+
+   backsellerviewP.setOnAction(e -> {
+    sellerPDataTextArea.clear();
+    mainstage.setScene(sellerviewscene);
+    });
+    
+    viewPsellerbox.getChildren().addAll(topBarsellerviewP,viewPseller,sellerPDataTextArea,refreshsellerP);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // admin manage scene
    
@@ -782,7 +1179,7 @@ adminSearchBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
 
 Button backedit =new Button("Back");
 backedit.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-backedit.setOnAction(e -> mainstage.setScene(managescene));
+
 
 HBox topBaredit = new HBox(backedit);
 topBaredit.setAlignment(Pos.TOP_LEFT);
@@ -933,6 +1330,7 @@ searchBoSeller.setAlignment(Pos.CENTER); // Center elements horizontally
 VBox.setMargin(searchBoSeller, new Insets(50)); // Adjust vertical margin
 
 sellerSearch.getChildren().addAll(searchBoSeller);
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //remove seller scene
 
@@ -1158,6 +1556,7 @@ searchBoxCustomer.setAlignment(Pos.CENTER); // Center elements horizontally
 VBox.setMargin(searchBoxCustomer, new Insets(50)); // Adjust vertical margin
 
 customerSearchBox.getChildren().addAll(searchBoxCustomer);
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //search customer scene
    VBox customerSearch = new VBox(20); // Adjust spacing as needed
@@ -1362,7 +1761,6 @@ customerSearch.getChildren().addAll(searchBoCustomer);
 
       viewBox.getChildren().addAll(topBarview,viewdash,viewoption);
 
-
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //view sellers scene
 
@@ -1443,26 +1841,18 @@ customerSearch.getChildren().addAll(searchBoCustomer);
    Text viewcustomer=new Text("Customer Data");
    viewcustomer.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,40));
    viewcustomer.setFill(Color.rgb(98, 42, 123));
-
-   
      
     backcustomerview.setOnAction(e -> {
     customerDataTextArea.clear();
     mainstage.setScene(viewscene);
     });
 
-    
-
     viewcustomerbox.getChildren().addAll(topBarcustomerview,viewcustomer,customerDataTextArea,refresh);
-
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //view  oreders history scene
 
 
 //Login and signup events 
-
-
 
 SignupB.setOnMouseClicked(e -> {
     if (selectedRole != null) {
@@ -1515,7 +1905,6 @@ SignupB.setOnMouseClicked(e -> {
                mainstage.setScene(LiSu);
                break;
 
-              
           } else {
               int id = sellerArrayList.size() + 1;
               Seller sellerLoggedIn = new Seller(Logintype.getText(),LoginEnter.getText() ,id);
@@ -1572,8 +1961,6 @@ SignupB.setOnMouseClicked(e -> {
         alert.showAndWait();
     }
 });
-
-        
        //icon setup + mainstage showing
 
        mainstage.getIcons().add(new javafx.scene.image.Image("image.jpg"));
@@ -1591,9 +1978,9 @@ SignupB.setOnMouseClicked(e -> {
     
         loadArrayLists();
         System.out.println("data loaded");
-        /*for (Seller string : sellerArrayList) {
-            System.out.println(string.getUserName());
-        }*/
+        for (Product string : productArrayList) {
+            System.out.println(string.getProductDetails());
+        }
         launch(args);
         saveArrayLists();
         System.out.println("data saved");
