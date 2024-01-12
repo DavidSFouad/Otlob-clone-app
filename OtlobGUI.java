@@ -1978,9 +1978,6 @@ SignupB.setOnMouseClicked(e -> {
     
         loadArrayLists();
         System.out.println("data loaded");
-        for (Product string : productArrayList) {
-            System.out.println(string.getProductDetails());
-        }
         launch(args);
         saveArrayLists();
         System.out.println("data saved");
