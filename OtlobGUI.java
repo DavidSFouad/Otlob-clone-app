@@ -859,9 +859,9 @@ addToCartButton.setOnAction(e -> {
     removeprod.setStyle("-fx-text-fill: rgb(98, 42, 123)");
     removeprod.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
     
-    Label rem = new Label("remove a product from your cart");
+    Label rem = new Label("remove");
     rem.setStyle("-fx-text-fill: rgb(98, 42, 123)");
-    rem.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+    rem.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 10));
 
     ComboBox<String> customercartrem=new ComboBox<>();
     /*HashMap<Product, Integer> cartProducts2 = customerloggedin[0].getCustomerCart().getCartProducts();
@@ -2528,4 +2528,4 @@ customerSearch.getChildren().addAll(searchBoCustomer);
        
     }
    
-}
+}/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
