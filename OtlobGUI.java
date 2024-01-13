@@ -20,11 +20,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
@@ -99,7 +96,6 @@ public class OtlobGUI extends Application {
     }
 
   private String selectedRole;
-
     
   @Override
     public void start(Stage mainstage)throws Exception{
@@ -540,9 +536,6 @@ public class OtlobGUI extends Application {
  
      StartOrderingpane.getChildren().addAll(bacK,StartOrd,actions1);
 
- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
-   
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //login function    
     
@@ -552,13 +545,13 @@ public class OtlobGUI extends Application {
         
         switch (selectedRole) {
             case "Admin":
-                /*for (Admin admin : adminArrayList) {
-                  if(Logintype.getText().equals(admin.getUserName())&&LoginEnter.getText().equals(admin.getUserPassword())){*/
+                for (Admin admin : adminArrayList) {
+                  if(Logintype.getText().equals(admin.getUserName())&&LoginEnter.getText().equals(admin.getUserPassword())){
 
                     mainstage.setScene(adminscene);
-                    /*break;
+                    break;
                    }
-                }*/
+                }
                 break;
             case "Seller":
 
@@ -731,7 +724,7 @@ SignupB.setOnMouseClicked(e -> {
       sellerComboBox.setPromptText("Select a seller");
 
       TextArea sellerproducts = new TextArea();
-      sellerproducts.setPrefSize(200, 150); // Set preferred size
+      sellerproducts.setPrefSize(200, 150); 
       sellerproducts.setEditable(false);
 
       ComboBox<String> productComboBox = new ComboBox<>();
@@ -739,37 +732,30 @@ SignupB.setOnMouseClicked(e -> {
 
       Button selectseller = new Button("Select");
 selectseller.setOnAction(e -> {
-    // Initialize selectedseller[0] with default values
+   
     selectedseller[0] = new Seller("", "", 0);
 
     for (Seller seller : sellerArrayList) {
         if (seller.getUserName().equals(sellerComboBox.getValue())) {
-            // Update the selected seller with the seller from the list
             selectedseller[0] = seller;
-            break;  // Break out of the loop once a matching seller is found
         }
     }
 
-    // Check if the selected seller is not null
     if (selectedseller[0] != null) {
-        // Update the seller products
+     
         StringBuilder productData = new StringBuilder();
         for (Product product : selectedseller[0].sellerProducts) {
             productData.append("Name: ").append(product.getProductName()).append(", Price: ").append(product.getProductPrice()).append("\n");
         }
         sellerproducts.setText(productData.toString());
         productComboBox.getItems().clear();
-        // Populate productComboBox with products from the selected seller
-        int i=0;
+        
         for (Product product : selectedseller[0].sellerProducts) {
             productComboBox.getItems().add(product.getProductName());
-            i++;
         }
         
     } else {
-        // Handle the case when no seller is selected
         sellerproducts.setText("No seller selected.");
-        // Clear the productComboBox when no seller is selected
         productComboBox.getItems().clear();
     }
 });   
@@ -797,7 +783,6 @@ addToCartButton.setOnAction(e -> {
         }
     }
     if (selectedProduct != null && selectedQuantity != null) {
-        // Add the selected product and quantity to the cart
         customerloggedin[0].addProductToCart(selectedProduct, selectedQuantity);
 
         System.out.println("Added to cart: " + selectedProduct.getProductName() + " - Quantity: " + selectedQuantity);
@@ -806,8 +791,6 @@ addToCartButton.setOnAction(e -> {
         System.out.println("Please select a product and quantity.");
     }
 });
-
-
       backSearchsellers.setOnAction(e->mainstage.setScene(StarOrdering));
       searchsellersbox.getChildren().addAll(topBarsearchsellers,searchsellerlabel,sellerComboBox,selectseller,sellerproducts,addPtocart,addToCartButton);
 /////////////////////////////////////////////////////////   Customer     ////////////////////////////////////////////////////////////
@@ -1068,12 +1051,10 @@ showProductOnly.setText(orderData2.toString());
     ratinginput.setEditable(true);
     ratinginput.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
     
-    
-    
     Confirm.setOnAction(e -> {
 try {
     // Get the selected order ID for rating
-    String selectedOrderID = ratinginput.getText(); // Change Rating to ratinginput
+    String selectedOrderID = ratinginput.getText(); 
     int idinput= Integer.parseInt(selectedOrderID);
  
     int newRating = Integer.parseInt(Rating.getText());
@@ -1093,10 +1074,7 @@ if (newRating < 0 || newRating > 5) {
             break; 
         }
     }
-
-    // Display a success message or perform any other necessary actions
     System.out.println("Rating confirmed successfully!");
-
 
     Rating.clear();
     ratinginput.clear();
@@ -1167,36 +1145,26 @@ if (newRating < 0 || newRating > 5) {
         Double price= Double.parseDouble(addproductPfield.getText());
         Product newProduct = new Product(id, addproductNfield.getText(), price);
         sellerLoggedInContainer[0].addProduct(productArrayList, newProduct);
-        /*for (Product product : sellerLoggedInContainer[0].sellerProducts) {
-            System.out.println(product.productName);
-        }
-        
-        System.out.println(sellerLoggedInContainer[0].sellerProducts);
-*/
+       
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("New Product added");
         alert.setHeaderText(null);
         alert.setContentText("Operation success");
         alert.showAndWait();
-        /*for (Seller seller : sellerArrayList) {
-            System.out.println(seller.getUserName()+" "+seller.getUserPassword());
-        }*/
     }});
     
-      
       selleraddproduct.getChildren().addAll(topBaraddP,addcProducttitle,productname,addproductNfield,addproductprice,addproductPfield,addproduct);
       selleraddproduct.setStyle("-fx-background-color: rgb(255, 222, 0);");
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       //seller edit product
-      VBox selleredithBox = new VBox(20); // Adjust spacing as needed
-      selleredithBox.setAlignment(Pos.CENTER); // Center elements vertically
+      VBox selleredithBox = new VBox(20); 
+      selleredithBox.setAlignment(Pos.CENTER); 
       Scene sellereditScene = new Scene(selleredithBox, 1000, 600);
       EditS.setOnAction(e -> mainstage.setScene(sellereditScene));
       selleredithBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
       
       Button backSEdit = new Button("Back");
       backSEdit.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-      
       
       HBox topBarSEdit = new HBox(backSEdit);
       topBarSEdit.setAlignment(Pos.TOP_LEFT);
@@ -1223,9 +1191,8 @@ if (newRating < 0 || newRating > 5) {
                   }
               }
       
-              // Update the content without clearing the existing nodes
               VBox productInfoBox = new VBox(10);
-              selleredithBox.getChildren().remove(productInfoBox); // Remove previous content if any
+              selleredithBox.getChildren().remove(productInfoBox); 
       
               if (!matchedProducts.isEmpty()) {
                   for (Product matchedProduct : matchedProducts) {
@@ -1239,12 +1206,12 @@ if (newRating < 0 || newRating > 5) {
       
                       Button editButton = new Button("Edit");
                       editButton.setOnAction(event -> {
-                          // Perform edit on product's name and price
+                          
                           matchedProduct.setProductName(productNameField.getText());
                           try {
                               double newPrice = Double.parseDouble(productPriceField.getText());
                               matchedProduct.setProductPrice(newPrice);
-                              // You may update your data model or perform other actions as needed
+                             
                           } catch (NumberFormatException ex) {
                               Alert alert = new Alert(Alert.AlertType.WARNING);
                               alert.setTitle("Invalid input");
@@ -1278,9 +1245,9 @@ if (newRating < 0 || newRating > 5) {
       
       HBox editBox = new HBox(20);
       editBox.getChildren().addAll(topBarSEdit, searchLabelSedit, searchFieldSedit, searchButtonSedit);
-      editBox.setAlignment(Pos.CENTER); // Center elements horizontally
+      editBox.setAlignment(Pos.CENTER); 
       
-      VBox.setMargin(editBox, new Insets(50)); // Adjust vertical margin
+      VBox.setMargin(editBox, new Insets(50)); 
       
       selleredithBox.getChildren().addAll(editBox);
       backSEdit.setOnAction(e ->{
@@ -1290,8 +1257,8 @@ if (newRating < 0 || newRating > 5) {
     );
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // seller remove product
-VBox removeProductBox = new VBox(20); // Adjust spacing as needed
-removeProductBox.setAlignment(Pos.CENTER); // Center elements vertically
+VBox removeProductBox = new VBox(20); 
+removeProductBox.setAlignment(Pos.CENTER);
 Scene removeProductScene = new Scene(removeProductBox, 1000, 600);
 RemoveS.setOnAction(e -> { mainstage.setScene(removeProductScene); });
 removeProductBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
@@ -1326,7 +1293,7 @@ searchButtonsrem.setOnAction(e -> {
         }
         
         if (!matchedProducts.isEmpty()) {
-            // Confirmation alert before deletion
+            
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
             confirmationAlert.setTitle("Confirm Deletion");
             confirmationAlert.setHeaderText(null);
@@ -1361,15 +1328,15 @@ searchButtonsrem.setOnAction(e -> {
 
 HBox searchBoxsrem = new HBox(20);
 searchBoxsrem.getChildren().addAll(topBarsRemove, searchLabelSrem, searchFieldsrem, searchButtonsrem);
-searchBoxsrem.setAlignment(Pos.CENTER); // Center elements horizontally
+searchBoxsrem.setAlignment(Pos.CENTER); 
 
-VBox.setMargin(searchBoxsrem, new Insets(50)); // Adjust vertical margin
+VBox.setMargin(searchBoxsrem, new Insets(50)); 
 
 removeProductBox.getChildren().addAll(searchBoxsrem);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //seller search product
-VBox sellersearchBox = new VBox(20); // Adjust spacing as needed
-      sellersearchBox.setAlignment(Pos.CENTER); // Center elements vertically
+VBox sellersearchBox = new VBox(20); 
+      sellersearchBox.setAlignment(Pos.CENTER); 
       Scene sellersearchScene = new Scene(sellersearchBox, 1000, 600);
       ViewS.setOnAction(e -> mainstage.setScene(sellersearchScene));
       sellersearchBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
@@ -1395,7 +1362,7 @@ VBox sellersearchBox = new VBox(20); // Adjust spacing as needed
       searchButtonSsearch.setOnAction(e -> {
           String searchName = searchFieldSsearch.getText();
           if (!searchName.isEmpty()) {
-              // Search functionality
+              
               ArrayList<Product> matchedProducts = new ArrayList<>();
               for (Product product : productArrayList) {
                   if (product.getProductName().equalsIgnoreCase(searchName)) {
@@ -1403,9 +1370,8 @@ VBox sellersearchBox = new VBox(20); // Adjust spacing as needed
                   }
               }
       
-              // Update the content without clearing the existing nodes
               VBox productInfoBox = new VBox(10);
-              selleredithBox.getChildren().remove(productInfoBox); // Remove previous content if any
+              selleredithBox.getChildren().remove(productInfoBox); 
       
               if (!matchedProducts.isEmpty()) {
                   for (Product matchedProduct : matchedProducts) {
@@ -1443,9 +1409,9 @@ VBox sellersearchBox = new VBox(20); // Adjust spacing as needed
       
       HBox SsearchBox = new HBox(20);
       SsearchBox.getChildren().addAll(topBarSsearch, searchLabelSsearch, searchFieldSsearch, searchButtonSsearch);
-      SsearchBox.setAlignment(Pos.CENTER); // Center elements horizontally
+      SsearchBox.setAlignment(Pos.CENTER); 
       
-      VBox.setMargin(SsearchBox, new Insets(50)); // Adjust vertical margin
+      VBox.setMargin(SsearchBox, new Insets(50)); 
       
       sellersearchBox.getChildren().addAll(SsearchBox);
       backSsearch.setOnAction(e ->{
@@ -1455,8 +1421,8 @@ VBox sellersearchBox = new VBox(20); // Adjust spacing as needed
     );
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // seller view products
-VBox viewPsellerbox = new VBox(20); // Adjust spacing as needed
-    viewPsellerbox.setAlignment(Pos.TOP_CENTER); // Center elements vertically
+VBox viewPsellerbox = new VBox(20); 
+    viewPsellerbox.setAlignment(Pos.TOP_CENTER); 
     viewPsellerbox.setPadding(new Insets(20));
 
     Scene viewPsellerscene=new Scene(viewPsellerbox,1000,600);
@@ -1472,8 +1438,8 @@ VBox viewPsellerbox = new VBox(20); // Adjust spacing as needed
    topBarsellerviewP.setPadding(new Insets(10));
    
    TextArea sellerPDataTextArea = new TextArea();
-    sellerPDataTextArea.setPrefSize(100, 150); // Set preferred size
-    sellerPDataTextArea.setEditable(false); // Make the text area read-only
+    sellerPDataTextArea.setPrefSize(100, 150); 
+    sellerPDataTextArea.setEditable(false); 
 
     Button refreshsellerP =new Button("Refresh");
    refreshsellerP.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
@@ -1552,8 +1518,8 @@ VBox viewPsellerbox = new VBox(20); // Adjust spacing as needed
       choice3.setSpacing(50);
       choice3.getChildren().addAll(add,edit,search,remove);
       choice3.setAlignment(Pos.CENTER);
-      choice3.setTranslateX(0); // Set X position
-      choice3.setTranslateY(0); // Set Y position
+      choice3.setTranslateX(0); 
+      choice3.setTranslateY(0); 
 
      Text customertitle=new Text("Customer");
      customertitle.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,30));
@@ -1588,11 +1554,8 @@ VBox viewPsellerbox = new VBox(20); // Adjust spacing as needed
       choice4.setSpacing(50);
       choice4.getChildren().addAll(addc,editc,searchc,removec);
       choice4.setAlignment(Pos.CENTER);
-      choice4.setTranslateX(0); // Set X position
-      choice4.setTranslateY(0); // Set Y position
-
-      
-
+      choice4.setTranslateX(0); 
+      choice4.setTranslateY(0); 
 
    manageBox.getChildren().addAll(topBar4,managedash,sellertitle,choice3,customertitle,choice4);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1665,12 +1628,10 @@ VBox viewPsellerbox = new VBox(20); // Adjust spacing as needed
             System.out.println(seller.getUserName()+" "+seller.getUserPassword());
         }
     }});
-    
       
       sellerbox.getChildren().addAll(topBar6,addsellertitle,sellername,addsellerNfield,addsellerpass,addsellerPfield,addseller);
       sellerbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
 
-      
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //edit seller scene
    VBox adminSearchBox = new VBox(20); // Adjust spacing as needed
@@ -1681,7 +1642,6 @@ adminSearchBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
 
 Button backedit =new Button("Back");
 backedit.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-
 
 HBox topBaredit = new HBox(backedit);
 topBaredit.setAlignment(Pos.TOP_LEFT);
@@ -1700,7 +1660,7 @@ searchButton.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-fill: rg
 searchButton.setOnAction(e -> {
     String searchName = searchField.getText();
     if (!searchName.isEmpty()) {
-        // Search functionality
+        
         ArrayList<Seller> matchedSellers = new ArrayList<>();
         for (Seller seller : sellerArrayList) {
             if (seller.getUserName().equalsIgnoreCase(searchName)) {
@@ -1708,9 +1668,8 @@ searchButton.setOnAction(e -> {
             }
         }
         
-        // Update the content without clearing the existing nodes
         VBox sellerInfoBox = new VBox(10);
-        adminSearchBox.getChildren().remove(sellerInfoBox); // Remove previous content if any
+        adminSearchBox.getChildren().remove(sellerInfoBox);
 
         if (!matchedSellers.isEmpty()) {
             for (Seller matchedSeller : matchedSellers) {
@@ -1749,16 +1708,16 @@ searchButton.setOnAction(e -> {
 
 HBox searchBox = new HBox(20);
 searchBox.getChildren().addAll(topBaredit,searchLabel, searchField, searchButton);
-searchBox.setAlignment(Pos.CENTER); // Center elements horizontally
+searchBox.setAlignment(Pos.CENTER); 
 
-VBox.setMargin(searchBox, new Insets(50)); // Adjust vertical margin
+VBox.setMargin(searchBox, new Insets(50)); 
 
 adminSearchBox.getChildren().addAll(searchBox);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //search seller scene
 
-   VBox sellerSearch = new VBox(20); // Adjust spacing as needed
-sellerSearch.setAlignment(Pos.CENTER); // Center elements vertically
+   VBox sellerSearch = new VBox(20); 
+sellerSearch.setAlignment(Pos.CENTER); 
 Scene sellerSearchScene = new Scene(sellerSearch, 1000, 600);
 search.setOnAction(e -> { mainstage.setScene(sellerSearchScene); });
 sellerSearch.setStyle("-fx-background-color: rgb(255, 222, 0);");
@@ -1792,9 +1751,8 @@ searchBSeller.setOnAction(e -> {
             }
         }
         
-        // Update the content without clearing the existing nodes
         VBox sellerInfoBox = new VBox(10);
-        sellerSearch.getChildren().remove(sellerInfoBox); // Remove previous content if any
+        sellerSearch.getChildren().remove(sellerInfoBox); 
 
         if (!matchedSellers.isEmpty()) {
             for (Seller matchedSeller : matchedSellers) {
@@ -1827,17 +1785,17 @@ searchBSeller.setOnAction(e -> {
 });
 HBox searchBoSeller = new HBox(20);
 searchBoSeller.getChildren().addAll(topSellerSearch, searchLSeller, searchFSeller, searchBSeller);
-searchBoSeller.setAlignment(Pos.CENTER); // Center elements horizontally
+searchBoSeller.setAlignment(Pos.CENTER); 
 
-VBox.setMargin(searchBoSeller, new Insets(50)); // Adjust vertical margin
+VBox.setMargin(searchBoSeller, new Insets(50)); 
 
 sellerSearch.getChildren().addAll(searchBoSeller);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //remove seller scene
 
-   VBox deleteSellerBox = new VBox(20); // Adjust spacing as needed
-deleteSellerBox.setAlignment(Pos.CENTER); // Center elements vertically
+   VBox deleteSellerBox = new VBox(20); 
+deleteSellerBox.setAlignment(Pos.CENTER); 
 Scene deleteSellerScene = new Scene(deleteSellerBox, 1000, 600);
 remove.setOnAction(e -> { mainstage.setScene(deleteSellerScene); });
 deleteSellerBox.setStyle("-fx-background-color: rgb(255, 222, 0);");
@@ -1872,7 +1830,7 @@ searchButton2.setOnAction(e -> {
         }
         
         if (!matchedSellers.isEmpty()) {
-            // Confirmation alert before deletion
+            
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
             confirmationAlert.setTitle("Confirm Deletion");
             confirmationAlert.setHeaderText(null);
@@ -1880,7 +1838,7 @@ searchButton2.setOnAction(e -> {
 
             Optional<ButtonType> result = confirmationAlert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                // Remove all matched sellers from the array list
+                
                 sellerArrayList.removeAll(matchedSellers);
                 Alert deletionAlert = new Alert(Alert.AlertType.INFORMATION);
                 deletionAlert.setTitle("Deletion Success");
@@ -1906,9 +1864,9 @@ searchButton2.setOnAction(e -> {
 
 HBox searchBox2 = new HBox(20);
 searchBox2.getChildren().addAll(topBarEdit, searchLabeld, searchField2, searchButton2);
-searchBox2.setAlignment(Pos.CENTER); // Center elements horizontally
+searchBox2.setAlignment(Pos.CENTER);
 
-VBox.setMargin(searchBox2, new Insets(50)); // Adjust vertical margin
+VBox.setMargin(searchBox2, new Insets(50)); 
 
 deleteSellerBox.getChildren().addAll(searchBox2);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1967,12 +1925,8 @@ deleteSellerBox.getChildren().addAll(searchBox2);
         alert.setHeaderText(null);
         alert.setContentText("Operation success");
         alert.showAndWait();
-        /*for (Seller seller : sellerArrayList) {
-            System.out.println(seller.getUserName()+" "+seller.getUserPassword());
-        }*/
     }});
     
-      
       customerbox.getChildren().addAll(topBar7,addcustomertitle,customername,addcustomerNfield,addcustomerpass,addcustomerPfield,addcustomer);
       customerbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2004,7 +1958,7 @@ searchButtonCustomer.setStyle("-fx-background-color: rgb(255, 222, 0); -fx-text-
 searchButtonCustomer.setOnAction(e -> {
     String searchName = searchFieldCustomer.getText();
     if (!searchName.isEmpty()) {
-        // Search functionality
+       
         ArrayList<Customer> matchedCustomers = new ArrayList<>();
         for (Customer customer : customerArrayList) {
             if (customer.getUserName().equalsIgnoreCase(searchName)) {
@@ -2012,10 +1966,8 @@ searchButtonCustomer.setOnAction(e -> {
             }
         }
         
-        // Update the content without clearing the existing nodes
         VBox customerInfoBox = new VBox(10);
-        customerSearchBox.getChildren().remove(customerInfoBox); // Remove previous content if any
-
+        customerSearchBox.getChildren().remove(customerInfoBox); 
         if (!matchedCustomers.isEmpty()) {
             for (Customer matchedCustomer : matchedCustomers) {
                 HBox customerRow = new HBox(10);
@@ -2025,9 +1977,9 @@ searchButtonCustomer.setOnAction(e -> {
                 Label customerIdLabel = new Label("Customer ID: " + customerId);
                 Button editButton = new Button("Edit");
                 editButton.setOnAction(event -> {
-                    // Perform edit on customer's name
+                   
                     matchedCustomer.setUserName(customerNameField.getText());
-                    // You may update your data model or perform other actions as needed
+                    
                 });
 
                 customerRow.getChildren().addAll(new Label("Customer Name:"), customerNameField, customerIdLabel, editButton);
@@ -2053,16 +2005,16 @@ searchButtonCustomer.setOnAction(e -> {
 
 HBox searchBoxCustomer = new HBox(20);
 searchBoxCustomer.getChildren().addAll(topBarCustomerSearch, searchLabelCustomer, searchFieldCustomer, searchButtonCustomer);
-searchBoxCustomer.setAlignment(Pos.CENTER); // Center elements horizontally
+searchBoxCustomer.setAlignment(Pos.CENTER); 
 
-VBox.setMargin(searchBoxCustomer, new Insets(50)); // Adjust vertical margin
+VBox.setMargin(searchBoxCustomer, new Insets(50)); 
 
 customerSearchBox.getChildren().addAll(searchBoxCustomer);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //search customer scene
-   VBox customerSearch = new VBox(20); // Adjust spacing as needed
-customerSearch.setAlignment(Pos.CENTER); // Center elements vertically
+   VBox customerSearch = new VBox(20); 
+customerSearch.setAlignment(Pos.CENTER); 
 Scene customerSearchsScene = new Scene(customerSearch, 1000, 600);
 searchc.setOnAction(e->{mainstage.setScene(customerSearchsScene);});
 customerSearch.setStyle("-fx-background-color: rgb(255, 222, 0);");
@@ -2096,9 +2048,8 @@ searchBCustomer.setOnAction(e -> {
             }
         }
         
-        // Update the content without clearing the existing nodes
         VBox customerInfoBox = new VBox(10);
-        customerSearch.getChildren().remove(customerInfoBox); // Remove previous content if any
+        customerSearch.getChildren().remove(customerInfoBox); 
 
         if (!matchedCustomers.isEmpty()) {
             for (Customer matchedCustomer : matchedCustomers) {
@@ -2131,9 +2082,9 @@ searchBCustomer.setOnAction(e -> {
 });
 HBox searchBoCustomer = new HBox(20);
 searchBoCustomer.getChildren().addAll(topCustomerSearch, searchLCustomer, searchFCustomer, searchBCustomer);
-searchBoCustomer.setAlignment(Pos.CENTER); // Center elements horizontally
+searchBoCustomer.setAlignment(Pos.CENTER);
 
-VBox.setMargin(searchBoCustomer, new Insets(50)); // Adjust vertical margin
+VBox.setMargin(searchBoCustomer, new Insets(50));
 
 customerSearch.getChildren().addAll(searchBoCustomer);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2165,7 +2116,7 @@ customerSearch.getChildren().addAll(searchBoCustomer);
    searchButtonc.setOnAction(e -> {
        String searchName = searchFieldc.getText();
        if (!searchName.isEmpty()) {
-           // Search functionality
+          
            ArrayList<Customer> matchedCustomers = new ArrayList<>();
            for (Customer customer : customerArrayList) {
                if (customer.getUserName().equalsIgnoreCase(searchName)) {
@@ -2174,7 +2125,7 @@ customerSearch.getChildren().addAll(searchBoCustomer);
            }
            
            if (!matchedCustomers.isEmpty()) {
-               // Confirmation alert before deletion
+            
                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
                confirmationAlert.setTitle("Confirm Deletion");
                confirmationAlert.setHeaderText(null);
@@ -2182,7 +2133,7 @@ customerSearch.getChildren().addAll(searchBoCustomer);
    
                Optional<ButtonType> result = confirmationAlert.showAndWait();
                if (result.isPresent() && result.get() == ButtonType.OK) {
-                   // Remove all matched customers from the array list
+                   
                    customerArrayList.removeAll(matchedCustomers);
                    Alert deletionAlert = new Alert(Alert.AlertType.INFORMATION);
                    deletionAlert.setTitle("Deletion Success");
@@ -2208,9 +2159,9 @@ customerSearch.getChildren().addAll(searchBoCustomer);
    
    HBox searchBoxc = new HBox(20);
    searchBoxc.getChildren().addAll(topBarRemove, searchLabelc, searchFieldc, searchButtonc);
-   searchBoxc.setAlignment(Pos.CENTER); // Center elements horizontally
+   searchBoxc.setAlignment(Pos.CENTER);
    
-   VBox.setMargin(searchBoxc, new Insets(50)); // Adjust vertical margin
+   VBox.setMargin(searchBoxc, new Insets(50)); 
    
    deleteCustomerBox.getChildren().addAll(searchBoxc);
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2258,16 +2209,16 @@ customerSearch.getChildren().addAll(searchBoCustomer);
       viewoption.setSpacing(50);
       viewoption.getChildren().addAll(sellerview,customerview,orederview);
       viewoption.setAlignment(Pos.CENTER);
-      viewoption.setTranslateX(0); // Set X position
-      viewoption.setTranslateY(0); // Set Y position
+      viewoption.setTranslateX(0); 
+      viewoption.setTranslateY(0); 
 
       viewBox.getChildren().addAll(topBarview,viewdash,viewoption);
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //view sellers scene
 
-    VBox viewsellerbox = new VBox(20); // Adjust spacing as needed
-    viewsellerbox.setAlignment(Pos.TOP_CENTER); // Center elements vertically
+    VBox viewsellerbox = new VBox(20); 
+    viewsellerbox.setAlignment(Pos.TOP_CENTER); 
     viewsellerbox.setPadding(new Insets(20));
 
     Scene viewsellerscene=new Scene(viewsellerbox,1000,600);
@@ -2283,8 +2234,8 @@ customerSearch.getChildren().addAll(searchBoCustomer);
    topBarsellerview.setPadding(new Insets(10));
    
    TextArea sellerDataTextArea = new TextArea();
-    sellerDataTextArea.setPrefSize(200, 150); // Set preferred size
-    sellerDataTextArea.setEditable(false); // Make the text area read-only
+    sellerDataTextArea.setPrefSize(200, 150); 
+    sellerDataTextArea.setEditable(false); 
 
     Button refreshseller =new Button("Refresh");
    refreshseller.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
@@ -2295,7 +2246,6 @@ customerSearch.getChildren().addAll(searchBoCustomer);
     }
     sellerDataTextArea.setText(sellerData.toString());
    });
-
 
    Text viewseller=new Text("Seller Data");
    viewseller.setFont(Font.font("Impact",FontWeight.SEMI_BOLD,40));
@@ -2310,8 +2260,8 @@ customerSearch.getChildren().addAll(searchBoCustomer);
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //view customers scene
 
-    VBox viewcustomerbox = new VBox(20); // Adjust spacing as needed
-    viewcustomerbox.setAlignment(Pos.TOP_CENTER); // Center elements vertically
+    VBox viewcustomerbox = new VBox(20); 
+    viewcustomerbox.setAlignment(Pos.TOP_CENTER); 
     viewcustomerbox.setPadding(new Insets(20));
 
     Scene viewcustomerscene=new Scene(viewcustomerbox,1000,600);
@@ -2327,8 +2277,8 @@ customerSearch.getChildren().addAll(searchBoCustomer);
    topBarcustomerview.setPadding(new Insets(10));
 
    TextArea customerDataTextArea = new TextArea();
-    customerDataTextArea.setPrefSize(200, 150); // Set preferred size
-    customerDataTextArea.setEditable(false); // Make the text area read-only
+    customerDataTextArea.setPrefSize(200, 150); 
+    customerDataTextArea.setEditable(false); 
 
    Button refresh =new Button("Refresh");
    refresh.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
@@ -2353,9 +2303,7 @@ customerSearch.getChildren().addAll(searchBoCustomer);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    //view  oreders history scene
 
-
 //Login and signup events 
-
 
        //icon setup + mainstage showing
 
@@ -2525,7 +2473,5 @@ customerSearch.getChildren().addAll(searchBoCustomer);
             order.printOrderDetails();
         }
         System.out.println("data saved");
-       
     }
-   
 }/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
