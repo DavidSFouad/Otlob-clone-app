@@ -6,7 +6,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
-
+import java.util.HashMap;
+import java.util.Date;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -35,6 +37,10 @@ public class OtlobGUI extends Application {
 // role for choice admin/customer/seller IMPORTANT
 
     static Scanner s = new Scanner(System.in);
+   
+
+     Customer[] customerloggedin= new Customer[1];
+    Seller[] sellerLoggedInContainer = new Seller[1];
 
     static ArrayList<Admin> adminArrayList = new ArrayList<>();
     static ArrayList<Customer> customerArrayList = new ArrayList<>();
@@ -199,9 +205,9 @@ public class OtlobGUI extends Application {
       main.setStyle("-fx-background-color: rgb(255, 222, 0);");
       
       Text otlob = new Text("Otlob");
-        otlob.setTranslateX(410); 
+        otlob.setTranslateX(400); 
         otlob.setTranslateY(180);  
-        otlob.setFont(Font.font("Impact",FontWeight.BOLD,90));
+        otlob.setFont(Font.font("Impact",FontWeight.BOLD,100));
         otlob.setFill(Color.rgb(98, 42, 123));
         
         Text web = new Text("Web Application");
@@ -446,17 +452,18 @@ public class OtlobGUI extends Application {
     homepageC.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
     homepageC.setOnAction(e -> mainstage.setScene(LoginChoice));
     homepageC.setLayoutY(15);
+    homepageC.setLayoutX(15);
     
     Label userwlcm = new Label("Welcome Customer !");
 
      userwlcm.setStyle("-fx-text-fill: rgb(98, 42, 123)");
      userwlcm.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
     userwlcm.setLayoutX(373);
-    userwlcm.setLayoutY(10);
+    userwlcm.setLayoutY(50);
 
      HBox topBar3 = new HBox(homepageC);
-     topBar3.setAlignment(Pos.TOP_LEFT);
-     topBar3.setPadding(new Insets(10));
+     topBar3.setAlignment(Pos.TOP_CENTER);
+     topBar3.setPadding(new Insets(20));
      
      Button StartOrdering = new Button("Start Ordering");
      Button TrackOrderHistory = new Button("Track Order History");
@@ -487,6 +494,7 @@ public class OtlobGUI extends Application {
      StartOrd.setStyle("-fx-text-fill: rgb(98, 42, 123)");
      StartOrd.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
      StartOrd.setLayoutX(350);
+     StartOrd.setLayoutY(50);
 
      Button srchvendors = new Button("Search Vendors & Products");
     Button addProductToCart = new Button("Add Product to Cart");
@@ -513,60 +521,31 @@ public class OtlobGUI extends Application {
     confirmCart.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
     confirmCart.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
             
-    HBox actions1= new HBox(srchvendors,addProductToCart,removeProductFromCart);
-     actions1.setSpacing(15);
-     actions1.setLayoutX(65);
+    HBox actions1= new HBox(srchvendors,viewCart);
+     actions1.setSpacing(30);
+     actions1.setLayoutX(250);
      actions1.setLayoutY(200);
-    HBox actions2= new HBox(clearCart,viewCart,confirmCart);
+    HBox actions2= new HBox(clearCart,confirmCart);
      actions2.setSpacing(15);
      actions2.setLayoutX(260);
      actions2.setLayoutY(300);
      
      Button bacK = new Button("Go Back");
+     bacK.setLayoutX(10);
+     bacK.setLayoutY(10);
     bacK.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
      
      StartOrdering.setOnAction(e->mainstage.setScene(StarOrdering)); 
     bacK.setOnAction(e->mainstage.setScene(customerscene)); 
  
-     StartOrderingpane.getChildren().addAll(bacK,StartOrd,actions1,actions2);
+     StartOrderingpane.getChildren().addAll(bacK,StartOrd,actions1);
 
  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- //Track Order customer scene
-    Pane TrackOrderPane = new Pane();
-    TrackOrderPane.setStyle("-fx-background-color: rgb(255, 222, 0);");
-    Scene TrackOrder = new Scene(TrackOrderPane,1000,600);
-    Button backk = new Button("Go Back");
-    backk.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-
-    Label TrackOrdr = new Label("Track Order History Dashboard");
-    TrackOrdr.setLayoutX(314);
-    TrackOrdr.setStyle("-fx-text-fill: rgb(98, 42, 123)");
-    TrackOrdr.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
  
-    Button viewAllOrderDetails = new Button("View all Orders and their details");
-    Button TrackOrderStatus = new Button("View Order Status");
-    Button RateOrders = new Button("Rate Order");
- 
-     RateOrders.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-    RateOrders.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
-         
-     TrackOrderStatus.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-    TrackOrderStatus.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
-         
-     viewAllOrderDetails.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
-    viewAllOrderDetails.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
-         
-    HBox acTions = new HBox(viewAllOrderDetails,TrackOrderStatus,RateOrders);
-    acTions.setSpacing(15);
-    acTions.setLayoutX(118);
-    acTions.setLayoutY(250);
- 
-    TrackOrderPane.getChildren().addAll(backk,TrackOrdr,acTions);
-    TrackOrderHistory.setOnAction(e->mainstage.setScene(TrackOrder));
-    backk.setOnAction(e->mainstage.setScene(customerscene));
    
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Seller[] sellerLoggedInContainer = new Seller[1];
+    //login function    
+    
         Login.setOnMouseClicked(e -> {
   
     if (selectedRole != null) {
@@ -595,6 +574,7 @@ public class OtlobGUI extends Application {
             case "Customer":
                 for (Customer customer : customerArrayList) {
                   if(Logintype.getText().equals(customer.getUserName())&&LoginEnter.getText().equals(customer.getUserPassword())){
+                    customerloggedin[0]=customer;
                     mainstage.setScene(customerscene);
                     break;
                   }
@@ -613,11 +593,533 @@ public class OtlobGUI extends Application {
         alert.showAndWait();
     }
 });
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+SignupB.setOnMouseClicked(e -> {
+    if (selectedRole != null) {
+      boolean found = false;
+        switch (selectedRole) {
+            case "Admin":
+            for (Admin admin : adminArrayList){
+              if (admin.getUserName().equals(Logintype.getText()) && admin.getUserPassword().equals(LoginEnter.getText())) {
+                  found = true;
+                  break;
+              }
+          }
+
+          if (found){
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+               alert.setTitle("User already exist");
+               alert.setHeaderText(null);
+               alert.setContentText("Please login");
+               alert.showAndWait();
+               mainstage.setScene(LiSu);
+               break;
+              
+          } else {
+              int id = adminArrayList.size() + 1;
+              Admin adminLoggedIn = new Admin(Logintype.getText(),LoginEnter.getText() ,id);
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+              alert.setTitle("logged in");
+              alert.setHeaderText(null);
+              alert.setContentText("account add successfully");
+              alert.showAndWait();
+              adminArrayList.add(adminLoggedIn);
+            
+          }
+                mainstage.setScene(adminscene);
+                break;
+            case "Seller":
+                for (Seller seller : sellerArrayList){
+              if (seller.getUserName().equals(Logintype.getText()) && seller.getUserPassword().equals(LoginEnter.getText())) {
+                  found = true;
+                  break;
+              }
+            }
+
+          if (found){
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+               alert.setTitle("User already exist");
+               alert.setHeaderText(null);
+               alert.setContentText("Please login");
+               alert.showAndWait();
+               mainstage.setScene(LiSu);
+               break;
+
+          } else {
+              int id = sellerArrayList.size() + 1;
+              Seller sellerLoggedIn = new Seller(Logintype.getText(),LoginEnter.getText() ,id);
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+              alert.setTitle("logged in");
+              alert.setHeaderText(null);
+              alert.setContentText("account add successfully");
+              alert.showAndWait();
+              sellerArrayList.add(sellerLoggedIn);
+            
+          }
+                mainstage.setScene(sellerscene);
+                break;
+            case "Customer":
+            for (Customer customer : customerArrayList){
+              if (customer.getUserName().equals(Logintype.getText()) && customer.getUserPassword().equals(LoginEnter.getText())) {
+                  found = true;
+                  break;
+              }
+          }
+
+          if (found){
+               Alert alert = new Alert(Alert.AlertType.WARNING);
+               alert.setTitle("alert");
+               alert.setHeaderText(null);
+               alert.setContentText("user already exist Please login");
+               alert.showAndWait();
+               mainstage.setScene(LiSu);
+               break;
+              
+          } else {
+              int id = customerArrayList.size() + 1;
+              Customer customerLoggedIn = new Customer(Logintype.getText(),LoginEnter.getText() ,id);
+              Alert alert = new Alert(Alert.AlertType.WARNING);
+              alert.setTitle("logged in");
+              alert.setHeaderText(null);
+              alert.setContentText("account add successfully");
+              alert.showAndWait();
+              customerArrayList.add(customerLoggedIn);
+              customerloggedin[0]=customerLoggedIn;
+            
+          }
+                mainstage.setScene(customerscene);
+                break;
+            default:
+                // Handle unexpected case
+                break;
+        }
+    } else {
+        
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Role Selection");
+        alert.setHeaderText(null);
+        alert.setContentText("Please go back and select Admin/Seller/Customer.");
+        alert.showAndWait();
+    }
+});
+//////////////////////////////////////////////////////     Customer    ////////////////////////////////////////////////////////
+   // search sellers scene
+   
+   Seller[] selectedseller=new Seller[1];
+   VBox searchsellersbox=new VBox(10);
+   searchsellersbox.setAlignment(Pos.TOP_CENTER); // Center elements vertically
+      Scene searchsellerScene = new Scene(searchsellersbox, 1000, 600);
+      srchvendors.setOnAction(e -> mainstage.setScene(searchsellerScene));
+      searchsellersbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+
+      Button backSearchsellers = new Button("Back");
+      backSearchsellers.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+      
+      HBox topBarsearchsellers = new HBox(backSearchsellers);
+      topBarsearchsellers.setAlignment(Pos.TOP_LEFT);
+      topBarsearchsellers.setPadding(new Insets(50));
+
+      Label searchsellerlabel = new Label("Select a Restraunt you wanna try out!!");
+      searchsellerlabel.setLayoutX(314);
+      searchsellerlabel.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+      searchsellerlabel.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
+
+      ComboBox<String> sellerComboBox=new ComboBox<>();
+      for (Seller seller2 : sellerArrayList) {
+        sellerComboBox.getItems().add(seller2.getUserName());
+      }
+      sellerComboBox.setPromptText("Select a seller");
+
+      TextArea sellerproducts = new TextArea();
+      sellerproducts.setPrefSize(200, 150); // Set preferred size
+      sellerproducts.setEditable(false);
+
+      ComboBox<String> productComboBox = new ComboBox<>();
+    productComboBox.setPromptText("Select a product");
+
+      Button selectseller = new Button("Select");
+selectseller.setOnAction(e -> {
+    // Initialize selectedseller[0] with default values
+    selectedseller[0] = new Seller("", "", 0);
+
+    for (Seller seller : sellerArrayList) {
+        if (seller.getUserName().equals(sellerComboBox.getValue())) {
+            // Update the selected seller with the seller from the list
+            selectedseller[0] = seller;
+            break;  // Break out of the loop once a matching seller is found
+        }
+    }
+
+    // Check if the selected seller is not null
+    if (selectedseller[0] != null) {
+        // Update the seller products
+        StringBuilder productData = new StringBuilder();
+        for (Product product : selectedseller[0].sellerProducts) {
+            productData.append("Name: ").append(product.getProductName()).append(", Price: ").append(product.getProductPrice()).append("\n");
+        }
+        sellerproducts.setText(productData.toString());
+        productComboBox.getItems().clear();
+        // Populate productComboBox with products from the selected seller
+        int i=0;
+        for (Product product : selectedseller[0].sellerProducts) {
+            productComboBox.getItems().add(product.getProductName());
+            i++;
+        }
+        
+    } else {
+        // Handle the case when no seller is selected
+        sellerproducts.setText("No seller selected.");
+        // Clear the productComboBox when no seller is selected
+        productComboBox.getItems().clear();
+    }
+});   
+
+ComboBox<Integer> quantityComboBox = new ComboBox<>();
+quantityComboBox.setPromptText("Select quantity");
+
+for (int i = 1; i <= 10; i++) {
+    quantityComboBox.getItems().add(i);
+}
+
+HBox addPtocart=new HBox(10);
+addPtocart.setAlignment(Pos.CENTER);
+addPtocart.getChildren().addAll(productComboBox,quantityComboBox);
+
+Button addToCartButton = new Button("Add to Cart");
+
+addToCartButton.setOnAction(e -> {
+    Product selectedProduct =null;
+    Integer selectedQuantity = quantityComboBox.getValue();
+
+    for (Product product : productArrayList) {
+        if (product.getProductName().equals(productComboBox.getValue())) {
+            selectedProduct=product;
+        }
+    }
+    if (selectedProduct != null && selectedQuantity != null) {
+        // Add the selected product and quantity to the cart
+        customerloggedin[0].addProductToCart(selectedProduct, selectedQuantity);
+
+        System.out.println("Added to cart: " + selectedProduct.getProductName() + " - Quantity: " + selectedQuantity);
+        customerloggedin[0].getCustomerCart().displayCartContents();
+    } else {
+        System.out.println("Please select a product and quantity.");
+    }
+});
+
+
+      backSearchsellers.setOnAction(e->mainstage.setScene(StarOrdering));
+      searchsellersbox.getChildren().addAll(topBarsearchsellers,searchsellerlabel,sellerComboBox,selectseller,sellerproducts,addPtocart,addToCartButton);
+/////////////////////////////////////////////////////////   Customer     ////////////////////////////////////////////////////////////
+// view customer cart
+    VBox cviewcartbox=new VBox(1000);
+    cviewcartbox.setStyle("-fx-background-color: rgb(255, 222, 0);");
+    cviewcartbox.setSpacing(15);
+    cviewcartbox.setAlignment(Pos.TOP_CENTER);
+    
+    Scene cviewcartScene=new Scene(cviewcartbox,1000,600);
+    viewCart.setOnAction(e->mainstage.setScene(cviewcartScene));
+
+    Button viewcartback=new Button("Back");
+    viewcartback.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    viewcartback.setOnAction(e -> mainstage.setScene(StarOrdering));
+
+    HBox topBarviewcart = new HBox(viewcartback);
+    topBarviewcart.setAlignment(Pos.TOP_LEFT);
+    topBarviewcart.setPadding(new Insets(20));
+
+    Label viewyourcart = new Label("Your Cart");
+    viewyourcart.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+    viewyourcart.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 35));
+
+    TextArea viewcarttext=new TextArea();
+    viewcarttext.setPrefSize(5,200);
+    
+    viewcarttext.setEditable(false);
+
+    Button showproducts=new Button("Show Products");
+    showproducts.setOnAction(e->{
+        viewcarttext.clear();
+        StringBuilder cartproducts = new StringBuilder();
+        HashMap<Product, Integer> cartProducts = customerloggedin[0].getCustomerCart().getCartProducts();
+                if (!cartProducts.isEmpty()) {
+                    int i = 0;
+                    for (HashMap.Entry<Product, Integer> entry : cartProducts.entrySet()) {
+                        Product product = entry.getKey();
+                        int quantity = entry.getValue();
+
+                        cartproducts.append((i + 1) + ") " + product.getProductName() + "  Quantity: " + quantity+"\n");
+                        i++;
+                    }}
+                    Text totalprice=new Text(customerloggedin[0].getCustomerCart().getTotalPriceAsString());
+                    viewcarttext.setText(cartproducts.toString()+"\n"+"Total Price= $"+totalprice.getText());
+    });
+
+    Label removeprod = new Label("remove a product from your cart");
+    removeprod.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+    removeprod.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+    
+    Label rem = new Label("remove a product from your cart");
+    rem.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+    rem.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+
+    ComboBox<String> customercartrem=new ComboBox<>();
+    /*HashMap<Product, Integer> cartProducts2 = customerloggedin[0].getCustomerCart().getCartProducts();
+    if (!cartProducts2.isEmpty()) {
+        for (HashMap.Entry<Product, Integer> entry : cartProducts2.entrySet()) {
+            Product product = entry.getKey();
+            customercartrem.getItems().add(product.getProductName());
+            
+        }
+    }*/
+
+    Button remproduct =new Button("remove");
+    /*remproduct.setOnAction(e -> {
+        
+        String selectedProductName = customercartrem.getValue();
+    
+        if (selectedProductName != null && !selectedProductName.isEmpty()) {
+
+            for (HashMap.Entry<Product, Integer> entry : cartProducts2.entrySet()) {
+                Product product = entry.getKey();
+    
+                if (product.getProductName().equals(selectedProductName)) {
+
+                    customerloggedin[0].getCustomerCart().removeProduct(product, entry.getValue());
+    
+                    customercartrem.getItems().clear();
+                    for (HashMap.Entry<Product, Integer> updatedEntry : customerloggedin[0].getCustomerCart().getCartProducts().entrySet()) {
+                        Product updatedProduct = updatedEntry.getKey();
+                        customercartrem.getItems().add(updatedProduct.getProductName());
+                    }
+    
+                    System.out.println("Product removed from the cart: " + selectedProductName);
+                    break; 
+                }
+            }
+        } else {
+
+            System.out.println("Please select a product to remove.");
+        }
+    });*/
+    HBox viewcartbuttons =new HBox(rem,customercartrem,remproduct);
+    viewcartbuttons.setSpacing(20);
+    viewcartbuttons.setAlignment(Pos.CENTER);
+
+    Button clearproducts=new Button("Clear Cart");
+    clearproducts.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    clearproducts.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+    clearproducts.setOnAction(e->{
+        viewcarttext.clear();
+        customerloggedin[0].getCustomerCart().clearCart();
+    });
+
+    Button confirmcart=new Button("Confirm Cart");
+    confirmcart.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    confirmcart.setFont(Font.font("Impact", FontWeight.BOLD, 22));
+    confirmcart.setOnAction(e->{
+        Date currentDate = new Date();
+        orderArrayList.add(customerloggedin[0].confirmcart(currentDate));
+        System.out.println("cart confirmed");
+        for (Order order : orderArrayList) {
+            order.printOrderDetails();
+        }
+        customerloggedin[0].getCustomerCart().clearCart();
+        
+    });
+
+    HBox confirmclear=new HBox(confirmcart,clearproducts);
+    confirmclear.setSpacing(20);
+    confirmclear.setAlignment(Pos.CENTER);
+
+    cviewcartbox.getChildren().addAll(topBarviewcart,viewyourcart,viewcarttext,showproducts,removeprod,viewcartbuttons,confirmclear);
+
+ ////////////////////////////////////////////////////////   Customer     ///////////////////////////////////////////////////////////
+//Track Order customer scene
+Pane TrackOrderPane = new Pane();
+TrackOrderPane.setStyle("-fx-background-color: rgb(255, 222, 0);");
+Scene TrackOrder = new Scene(TrackOrderPane,1000,600);
+Button backk = new Button("Go Back");
+backk.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+
+Label TrackOrdr = new Label("Track Order History Dashboard");
+TrackOrdr.setLayoutX(314);
+TrackOrdr.setStyle("-fx-text-fill: rgb(98, 42, 123)");
+TrackOrdr.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 30));
+
+
+Button viewAllOrderDetails = new Button("View all Orders and their details");
+Button RateOrders = new Button("Rate Order");
+
+RateOrders.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+
+RateOrders.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+        
+viewAllOrderDetails.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+
+viewAllOrderDetails.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+        
+HBox acTions = new HBox(viewAllOrderDetails,RateOrders);
+acTions.setSpacing(30);
+acTions.setLayoutX(220);
+acTions.setLayoutY(250);
+
+
+TrackOrderPane.getChildren().addAll(backk,TrackOrdr,acTions);
+
+
+TrackOrderHistory.setOnAction(e->mainstage.setScene(TrackOrder));
+backk.setOnAction(e->mainstage.setScene(customerscene));
+//////////////////////////////////////////////////////////////////////////////////////
+    //View All Orders and Their Details scene AND Order Status included
+    Pane viewallorders = new Pane();
+    Scene viewallordersscene = new Scene(viewallorders,1000,600);
+    viewallorders.setStyle("-fx-background-color: rgb(255, 222, 0);");
+   
+    Button viewallordersgoback = new Button("Go Back");
+    viewallordersgoback.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    viewallordersgoback.setLayoutY(15);
+    
+    TextArea AllOrders = new TextArea();
+    
+    
+    AllOrders.setPrefSize(700, 400);
+    AllOrders.setLayoutX(200);
+    AllOrders.setLayoutY(50);
+    
+    Button refreshOrders = new Button("Click to refresh");
+    refreshOrders.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    refreshOrders.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+    
+    
+    
+    refreshOrders.setOnAction(e->{
+        AllOrders.clear();
+StringBuilder orderData = new StringBuilder();
+for (Order order : orderArrayList) {
+    orderData.append("ID: ").append(order.getOrderID());
+}
+AllOrders.setText(orderData.toString());
+});
+
+    AllOrders.setEditable(false);
+    
+    
+    refreshOrders.setLayoutX(470);
+    refreshOrders.setLayoutY(500);
+    
+    viewallorders.getChildren().addAll(viewallordersgoback,AllOrders,refreshOrders);
+    viewallordersgoback.setOnAction(e->mainstage.setScene(TrackOrder));
+    viewAllOrderDetails.setOnAction(e->mainstage.setScene(viewallordersscene));
+    //Rate Orders scene
+    Pane rateorderpane = new Pane();
+    Scene rateorder = new Scene(rateorderpane,1000,600);
+    rateorderpane.setStyle("-fx-background-color: rgb(255, 222, 0);");
+    Button rategoback = new Button("Go Back");
+    rategoback.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    rategoback.setLayoutY(15);
+    
+    
+    TextArea showProductOnly = new TextArea();
+    showProductOnly.setEditable(false);
+    showProductOnly.setPrefSize(700, 400);
+    showProductOnly.setLayoutX(200);
+    showProductOnly.setLayoutY(50);
+    
+    
+    Button refresh2 = new Button("Click to Refresh");
+    refresh2.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    refresh2.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 22));
+    refresh2.setLayoutX(25);
+    refresh2.setLayoutY(90);
+    
+    refresh2.setOnAction(e->{
+        showProductOnly.clear();
+        StringBuilder orderData2 = new StringBuilder();
+for (Order order : orderArrayList) {
+    String data= (String) order.getOrderDetailsAsString;
+    orderData2.append(data);
+        
+}
+showProductOnly.setText(orderData2.toString());
+    });
+    
+    TextArea Rating = new TextArea();
+    Rating.setLayoutX(800);
+    Rating.setLayoutY(480);
+    Rating.setEditable(true);
+    Rating.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+
+    Rating.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+    Rating.setPrefSize(40,30 );
+    
+    Button Confirm = new Button("Confirm Rating");
+    Confirm.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    Confirm.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 25));
+    Confirm.setLayoutX(600);
+    Confirm.setLayoutY(480);
+    
+ 
+    TextArea ratinginput = new TextArea();
+    ratinginput.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+    ratinginput.setPrefSize(40,30 );
+     ratinginput.setLayoutX(450);
+    ratinginput.setLayoutY(480);
+    ratinginput.setEditable(true);
+    ratinginput.setStyle("-fx-background-color: rgb(255, 222, 0);-fx-text-fill: rgb(98, 42, 123);-fx-border-color: rgb(98, 42, 123); -fx-border-width: 1px;");
+    
+    
+    
+    Confirm.setOnAction(e -> {
+try {
+    // Get the selected order ID for rating
+    String selectedOrderID = ratinginput.getText(); // Change Rating to ratinginput
+    int idinput= Integer.parseInt(selectedOrderID);
+ 
+    int newRating = Integer.parseInt(Rating.getText());
+if (newRating < 0 || newRating > 5) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid Rating");
+                alert.setHeaderText(null);
+                alert.setContentText("Error, Rating must be between 0 and 5.");
+                alert.showAndWait();
+                return;
+            }
+
+    for (Order orderd : orderArrayList) {
+        if (idinput==orderd.getOrderID()) {
+    
+            orderd.setRate(newRating);
+            break; 
+        }
+    }
+
+    // Display a success message or perform any other necessary actions
+    System.out.println("Rating confirmed successfully!");
+
+
+    Rating.clear();
+    ratinginput.clear();
+} catch (NumberFormatException ex) {
+
+    System.out.println("Invalid rating format. Please enter a numeric value.");
+}
+});
+
+    Label raterate = new Label("Enter ID of order you want to rate: ");
+    raterate.setStyle(";-fx-text-fill: rgb(98, 42, 123);");
+    raterate.setFont(Font.font("Impact", FontWeight.SEMI_BOLD, 20));
+    raterate.setLayoutX(100);
+    raterate.setLayoutY(500);
+    
+    rateorderpane.getChildren().addAll(rategoback,raterate,showProductOnly,refresh2,Rating,Confirm,ratinginput);
+    rategoback.setOnAction(e->mainstage.setScene(TrackOrder));
+    RateOrders.setOnAction(e->mainstage.setScene(rateorder));
+//////////////////////////////////////////////////////////    Seller    //////////////////////////////////////////////////////////
 //seller add product
 
     VBox selleraddproduct = new VBox(1000);
-      selleraddproduct.setSpacing(5);
+      selleraddproduct.setSpacing(10);
       selleraddproduct.setAlignment(Pos.TOP_CENTER);
 
       Scene selleraddproductscene=new Scene(selleraddproduct,1000,600);
@@ -629,7 +1131,7 @@ public class OtlobGUI extends Application {
 
       HBox topBaraddP = new HBox(addPback);
       topBaraddP.setAlignment(Pos.TOP_LEFT);
-      topBaraddP.setPadding(new Insets(50));
+      topBaraddP.setPadding(new Insets(20));
       
       Label addcProducttitle=new Label("Add Product Data");
       addcProducttitle.setStyle("-fx-text-fill: rgb(98, 42, 123)");
@@ -970,7 +1472,7 @@ VBox viewPsellerbox = new VBox(20); // Adjust spacing as needed
    topBarsellerviewP.setPadding(new Insets(10));
    
    TextArea sellerPDataTextArea = new TextArea();
-    sellerPDataTextArea.setPrefSize(200, 150); // Set preferred size
+    sellerPDataTextArea.setPrefSize(100, 150); // Set preferred size
     sellerPDataTextArea.setEditable(false); // Make the text area read-only
 
     Button refreshsellerP =new Button("Refresh");
@@ -1854,113 +2356,7 @@ customerSearch.getChildren().addAll(searchBoCustomer);
 
 //Login and signup events 
 
-SignupB.setOnMouseClicked(e -> {
-    if (selectedRole != null) {
-      boolean found = false;
-        switch (selectedRole) {
-            case "Admin":
-            for (Admin admin : adminArrayList){
-              if (admin.getUserName().equals(Logintype.getText()) && admin.getUserPassword().equals(LoginEnter.getText())) {
-                  found = true;
-                  break;
-              }
-          }
 
-          if (found){
-              Alert alert = new Alert(Alert.AlertType.WARNING);
-               alert.setTitle("User already exist");
-               alert.setHeaderText(null);
-               alert.setContentText("Please login");
-               alert.showAndWait();
-               mainstage.setScene(LiSu);
-               break;
-              
-          } else {
-              int id = adminArrayList.size() + 1;
-              Admin adminLoggedIn = new Admin(Logintype.getText(),LoginEnter.getText() ,id);
-              Alert alert = new Alert(Alert.AlertType.WARNING);
-              alert.setTitle("logged in");
-              alert.setHeaderText(null);
-              alert.setContentText("account add successfully");
-              alert.showAndWait();
-              adminArrayList.add(adminLoggedIn);
-            
-          }
-                mainstage.setScene(adminscene);
-                break;
-            case "Seller":
-                for (Seller seller : sellerArrayList){
-              if (seller.getUserName().equals(Logintype.getText()) && seller.getUserPassword().equals(LoginEnter.getText())) {
-                  found = true;
-                  break;
-              }
-            }
-
-          if (found){
-              Alert alert = new Alert(Alert.AlertType.WARNING);
-               alert.setTitle("User already exist");
-               alert.setHeaderText(null);
-               alert.setContentText("Please login");
-               alert.showAndWait();
-               mainstage.setScene(LiSu);
-               break;
-
-          } else {
-              int id = sellerArrayList.size() + 1;
-              Seller sellerLoggedIn = new Seller(Logintype.getText(),LoginEnter.getText() ,id);
-              Alert alert = new Alert(Alert.AlertType.WARNING);
-              alert.setTitle("logged in");
-              alert.setHeaderText(null);
-              alert.setContentText("account add successfully");
-              alert.showAndWait();
-              sellerArrayList.add(sellerLoggedIn);
-            
-          }
-                mainstage.setScene(sellerscene);
-                break;
-            case "Customer":
-            for (Customer customer : customerArrayList){
-              if (customer.getUserName().equals(Logintype.getText()) && customer.getUserPassword().equals(LoginEnter.getText())) {
-                  found = true;
-                  break;
-              }
-          }
-
-          if (found){
-               Alert alert = new Alert(Alert.AlertType.WARNING);
-               alert.setTitle("alert");
-               alert.setHeaderText(null);
-               alert.setContentText("user already exist Please login");
-               alert.showAndWait();
-               mainstage.setScene(LiSu);
-               break;
-              
-          } else {
-              int id = customerArrayList.size() + 1;
-              Customer customerLoggedIn = new Customer(Logintype.getText(),LoginEnter.getText() ,id);
-              Alert alert = new Alert(Alert.AlertType.WARNING);
-              alert.setTitle("logged in");
-              alert.setHeaderText(null);
-              alert.setContentText("account add successfully");
-              alert.showAndWait();
-              customerArrayList.add(customerLoggedIn);
-            
-          }
-                mainstage.setScene(customerscene);
-                break;
-            default:
-                // Handle unexpected case
-                break;
-        }
-    } else {
-        
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Role Selection");
-        alert.setHeaderText(null);
-        alert.setContentText("Please go back and select Admin/Seller/Customer.");
-        alert.showAndWait();
-    }
-});
        //icon setup + mainstage showing
 
        mainstage.getIcons().add(new javafx.scene.image.Image("image.jpg"));
@@ -1977,11 +2373,159 @@ SignupB.setOnMouseClicked(e -> {
     public static void main(String[] args) {
     
         loadArrayLists();
+        
         System.out.println("data loaded");
+        /*productArrayList.clear();
+        sellerArrayList.clear();
+        customerArrayList.clear();
+        adminArrayList.clear();*/
+
+       /*sellerArrayList.add(new Seller("Buffalo Burger", "123", 1));
+        sellerArrayList.add(new Seller("Wimpy", "123", 2));
+        sellerArrayList.add(new Seller("Willy's Kitchen", "123", 3));
+        sellerArrayList.add(new Seller("Alagha", "123", 4));
+        sellerArrayList.add(new Seller("Pablo & Abdo", "123", 5));
+        sellerArrayList.add(new Seller("Bazooka", "123", 6));
+        sellerArrayList.add(new Seller("City Crepe", "123", 7));
+        sellerArrayList.add(new Seller("Mori Sushi", "123", 8));
+        sellerArrayList.add(new Seller("Prego", "123", 9));
+        sellerArrayList.add(new Seller("Asian Corner", "123", 10));
+        sellerArrayList.add(new Seller("Paul", "123", 11));
+        sellerArrayList.add(new Seller("Wafflicious", "123", 12));
+        sellerArrayList.add(new Seller("DipNDip", "123", 13));
+        sellerArrayList.add(new Seller("Primos", "123", 14));
+        sellerArrayList.add(new Seller("Cilantro", "123", 15));*/
+
+       /*productArrayList.add(new Product(1, "Animal Style", 166));
+        productArrayList.add(new Product(2, "Cholos", 161));
+        productArrayList.add(new Product(3, "Blue Cheese", 166));
+        productArrayList.add(new Product(4, "Hitchhicker", 198));
+        productArrayList.add(new Product(5, "Old School", 161));
+        productArrayList.add(new Product(6, "Spicy B", 107));
+        productArrayList.add(new Product(7, "New Skool", 105));
+        productArrayList.add(new Product(8, "BBQ Bacon Chicken", 115));
+        productArrayList.add(new Product(9, "Cheesy Chicky Fillet", 105));
+        productArrayList.add(new Product(10, "Junior Cheese Burger", 48));
+        productArrayList.add(new Product(11, "Big Willy", 142));
+        productArrayList.add(new Product(12, "Chili Chili", 152));
+        productArrayList.add(new Product(13, "Pepperazzi", 157));
+        productArrayList.add(new Product(14, "Brooklyn Shrooms", 142));
+        productArrayList.add(new Product(15, "Ranchie Crunch", 172));
+        productArrayList.add(new Product(16, "Chicken shawerma", 65));
+        productArrayList.add(new Product(17, "Beef Shawerma", 80));
+        productArrayList.add(new Product(18, "Crunchy chicken Sandwich", 80));
+        productArrayList.add(new Product(19, "Fajita Sandwich", 80));
+        productArrayList.add(new Product(20, "French Fries Sandwich", 35));
+        productArrayList.add(new Product(21, "Pablo Burger", 65));
+        productArrayList.add(new Product(22, "Original Tony Burger", 95));
+        productArrayList.add(new Product(23, "Con Carne Taco", 85));
+        productArrayList.add(new Product(24, "Corden Bleu Sandwich", 89));
+        productArrayList.add(new Product(25, "Cowboy Hot Dog Sandwich", 85));
+        productArrayList.add(new Product(26, "Tower Chicken Crispy", 100));
+        productArrayList.add(new Product(27, "Chicken Turkey", 100));
+        productArrayList.add(new Product(28, "Honey Yummy", 135));
+        productArrayList.add(new Product(29, "RPG", 150));
+        productArrayList.add(new Product(30, "Zinger Supreme", 9));
+        productArrayList.add(new Product(31, "Hot Dog Crepe", 62));
+        productArrayList.add(new Product(32, "Crispy Crepe", 72));
+        productArrayList.add(new Product(33, "Tuna Crepe", 57));
+        productArrayList.add(new Product(34, "Mafia Crepe", 87));
+        productArrayList.add(new Product(35, "Monster Crepe", 67));
+        productArrayList.add(new Product(36, "Combo 30", 420));
+        productArrayList.add(new Product(37, "Combo 50", 650));
+        productArrayList.add(new Product(38, "Combo 100", 1250));
+        productArrayList.add(new Product(39, "Miso Soup", 65));
+        productArrayList.add(new Product(40, "Tom Yum", 110));
+        productArrayList.add(new Product(41, "Grilled Kofta Meal", 127));
+        productArrayList.add(new Product(42, "Grilled Fillet Meal", 163));
+        productArrayList.add(new Product(43, "Star Mix Meal", 253));
+        productArrayList.add(new Product(44, "Shish Tawook Meal", 127));
+        productArrayList.add(new Product(45, "Chicken BBQ Meal", 95));
+        productArrayList.add(new Product(46, "Mahraja Meal", 115));
+        productArrayList.add(new Product(47, "Sea Food Meal", 145));
+        productArrayList.add(new Product(48, "Nasi Goreng", 110));
+        productArrayList.add(new Product(49, "Chicken Sechuan", 105));
+        productArrayList.add(new Product(50, "Mah Mee Noodles", 55));
+        productArrayList.add(new Product(51, "Miso Avocado Toast", 159));
+        productArrayList.add(new Product(52, "Feta Avo", 169));
+        productArrayList.add(new Product(53, "Salmon Croll", 199));
+        productArrayList.add(new Product(54, "Halloumi Pesto", 164));
+        productArrayList.add(new Product(55, "Omelette Club", 169));
+        productArrayList.add(new Product(56, "Belgium Waffle", 58));
+        productArrayList.add(new Product(57, "American Waffle", 47));
+        productArrayList.add(new Product(58, "Mickey Waffle", 39));
+        productArrayList.add(new Product(59, "TNT Belgium Waffle", 100));
+        productArrayList.add(new Product(60, "Maltesers Waffle", 90));
+        productArrayList.add(new Product(61, "Brownies Crepe", 232));
+        productArrayList.add(new Product(62, "Fettuccine Crepe", 272));
+        productArrayList.add(new Product(63, "Waffle Stick", 167));
+        productArrayList.add(new Product(64, "Oreo Pancakes", 316));
+        productArrayList.add(new Product(65, "Bella Nutella Cake", 1228));
+        productArrayList.add(new Product(66, "Salami Pizza", 145));
+        productArrayList.add(new Product(67, "Hot Dog Pizza", 140));
+        productArrayList.add(new Product(68, "Chicken Ranch Pizza", 160));
+        productArrayList.add(new Product(69, "Chicken BBQ Pizza", 160));
+        productArrayList.add(new Product(70, "Smoked Pizza", 165));
+        productArrayList.add(new Product(71, "Cappucciano", 65));
+        productArrayList.add(new Product(72, "Latte", 60));
+        productArrayList.add(new Product(73, "Latte Frappe", 80));
+        productArrayList.add(new Product(74, "Flat White",70 ));
+        productArrayList.add(new Product(75, "Iced Spanish Latte", 85));*/
+
+        /*int counter = 0;
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 5; j++) {
+                sellerArrayList.get(i).getSellerProducts().add(productArrayList.get(counter));
+                counter++;
+            }
+        }*/
+
+        System.out.println("admins :");
+        for (Admin admin : adminArrayList) {
+            System.out.println(admin.getUserName());
+        }
+        System.out.println("\n");
+        System.out.println("sellers :");
+
+        for (Seller seller : sellerArrayList){
+            System.out.println("Seller ID: " + seller.getSellerID());
+            System.out.println("Seller Name: " + seller.getUserName());
+            System.out.println("Seller Pass: " + seller.getUserPassword());
+
+             System.out.println("");
+            System.out.println("Seller Products:-");
+            for (Product product : seller.getSellerProducts()){
+                System.out.println("\tProduct ID: " + product.getProductID());
+                System.out.println("\tProduct Name: " + product.getProductName());
+                System.out.println("\tProduct Price: " + product.getProductPrice());
+            }
+            System.out.println();
+        }
+        System.out.println("\n");
+        System.out.println("customers :");
+
+        for (Customer customer : customerArrayList) {
+            System.out.println(customer.getUserName());
+        }
+        System.out.println("\n");
+        System.out.println("products :");
+
+        for (Product product : productArrayList) {
+            System.out.println(product.getProductName()+" "+product.getProductPrice());
+        }
+        System.out.println("\n");
+        System.out.println("orders :");
+        for (Order order : orderArrayList) {
+            order.printOrderDetails();
+        }
+        
         launch(args);
         saveArrayLists();
+        for (Order order : orderArrayList) {
+            order.printOrderDetails();
+        }
         System.out.println("data saved");
-
+       
     }
    
 }

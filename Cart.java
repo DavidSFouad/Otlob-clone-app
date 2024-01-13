@@ -65,5 +65,20 @@ public class Cart implements Serializable {
 
     public void clearCart(){
         cartProducts.clear();
+        totalPrice=0;
+    }
+
+    public void displayCartContents() {
+        System.out.println("Cart Contents:");
+        for (HashMap.Entry<Product, Integer> entry : cartProducts.entrySet()) {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+            System.out.println("Product: " + product.getProductName() + ", Quantity: " + quantity);
+        }
+        System.out.println("Total Price: $" + totalPrice);
+    }
+
+    public String getTotalPriceAsString() {
+        return String.valueOf(totalPrice);
     }
 }

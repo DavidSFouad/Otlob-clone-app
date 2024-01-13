@@ -1,12 +1,12 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import java.util.Date;
 public class Customer extends User implements Serializable {
     private int customerID;
     private ArrayList<Order> customerOrders;
     private double customerRevenue;
     private Cart customerCart;
-
+    static int o=1;
     public Customer(String userName, String userPassword, int customerID) {
         super(userName, userPassword);
         this.customerID = customerID;
@@ -102,6 +102,15 @@ public class Customer extends User implements Serializable {
             totalRevenue += order.getTotalPrice();
         }
         return totalRevenue;
+    }
+
+    public Order confirmcart(Date date){
+        Order confirmedOrder= new Order(o,date);
+        o++;
+        confirmedOrder.setOrderProducts(customerCart.getCartProducts());
+        confirmedOrder.setTotalPrice(customerCart.getTotalPrice());
+        customerOrders.add(confirmedOrder);
+        return confirmedOrder;
     }
 
 }
